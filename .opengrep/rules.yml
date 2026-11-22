@@ -1,0 +1,48 @@
+rules:
+  - id: python-eval-exec
+    languages: [python]
+    severity: ERROR
+    message: eval and exec run arbitrary code; do not use them.
+    pattern-either:
+      - pattern: eval(...)
+      - pattern: exec(...)
+  - id: python-shell-true
+    languages: [python]
+    severity: ERROR
+    message: subprocess with shell=True allows command injection.
+    pattern: subprocess.$FUNC(..., shell=True, ...)
+  - id: python-pickle-load
+    languages: [python]
+    severity: ERROR
+    message: pickle.load runs code from untrusted data.
+    pattern-either:
+      - pattern: pickle.load(...)
+      - pattern: pickle.loads(...)
+  - id: python-sql-string-building
+    languages: [python]
+    severity: ERROR
+    message: Build SQL with parameters (?), never with string formatting.
+    pattern-either:
+      - pattern: $CUR.execute(f"...", ...)
+      - pattern: $CUR.execute("..." % ..., ...)
+      - pattern: $CUR.execute("...".format(...), ...)
+      - pattern: $CUR.execute("..." + $X, ...)
+  - id: python-hardcoded-secret
+    languages: [python]
+    severity: ERROR
+    message: A secret looks hardcoded; read it from the environment.
+    patterns:
+      - pattern-either:
+          - pattern: $NAME = "..."
+      - metavariable-regex:
+          metavariable: $NAME
+          regex: (?i).*(password|secret|api_key|token).*
+  - id: python-bare-except
+    languages: [python]
+    severity: WARNING
+    message: A bare except hides errors; catch a specific exception.
+    pattern: |
+      try:
+          ...
+      except:
+          ...
