@@ -4,7 +4,7 @@
 
 Det første trin bygger ikke noget, kunden kan bruge endnu. Det opsætter værktøjerne og strukturen, som alle senere trin bygger på, og serverer én side.
 
-![Trin 1](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/097-assignment-an-nnline-shop/raw/branch/main/docs/screenshots/step-01.png)
+![Trin 1](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/097-assignment-an-online-shop/raw/branch/main/docs/screenshots/step-01.png)
 
 ## Opsætning
 

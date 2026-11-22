@@ -195,6 +195,6 @@ Proceed.
 ---
 
 [SA-001]: ./stakeholder-analysis.md
-[bfd7827]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/097-assignment-an-nnline-shop/commit/bfd782710394ff04fce3f51f464e5e342cbeb4ca
+[bfd7827]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/097-assignment-an-online-shop/commit/bfd782710394ff04fce3f51f464e5e342cbeb4ca
 [ADR-0002]: ./adr/adr-0002-flask-web-framework.md
 [4d90862]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/097-assignment-an-online-shop/commit/4d908627163f1be713505164ac4973b394740c4f

@@ -4,7 +4,7 @@
 
 Visitors can now register, sign in and sign out, and the shop has an admin role.
 
-![Step 3](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/097-assignment-an-nnline-shop/raw/branch/main/docs/screenshots/step-03.png)
+![Step 3](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/097-assignment-an-online-shop/raw/branch/main/docs/screenshots/step-03.png)
 
 ## Password hashing
 

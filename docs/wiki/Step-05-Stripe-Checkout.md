@@ -4,7 +4,7 @@
 
 The shopper pays through Stripe Checkout in test mode, and only a paid session creates an order.
 
-![Step 5](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/097-assignment-an-nnline-shop/raw/branch/main/docs/screenshots/step-05.png)
+![Step 5](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/097-assignment-an-online-shop/raw/branch/main/docs/screenshots/step-05.png)
 
 ## The flow
 

@@ -12,3 +12,4 @@ An online shop built with Flask, SQLite, Stripe Checkout and plain JavaScript, w
 | 4 | [Shopping basket](Step-04-Shopping-Basket) |
 | 5 | [Stripe checkout](Step-05-Stripe-Checkout) |
 | 6 | [Order Kanban board](Step-06-Order-Kanban-Board) |
+| 7 | [Reflection](Step-07-Reflection) |

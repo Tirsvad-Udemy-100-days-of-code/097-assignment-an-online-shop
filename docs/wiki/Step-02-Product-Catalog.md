@@ -4,7 +4,7 @@
 
 The shop now stores products in SQLite and shows them: a grid on the home page and a detail page for each product.
 
-![Step 2](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/097-assignment-an-nnline-shop/raw/branch/main/docs/screenshots/step-02.png)
+![Step 2](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/097-assignment-an-online-shop/raw/branch/main/docs/screenshots/step-02.png)
 
 ## Layering
 

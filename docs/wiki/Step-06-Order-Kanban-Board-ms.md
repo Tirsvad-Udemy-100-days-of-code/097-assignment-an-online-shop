@@ -4,7 +4,7 @@
 
 Pemilik kedai mengikuti setiap pesanan berbayar pada papan Kanban, dan setiap pelanggan melihat status pesanan mereka sendiri.
 
-![Langkah 6](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/097-assignment-an-nnline-shop/raw/branch/main/docs/screenshots/step-06.png)
+![Langkah 6](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/097-assignment-an-online-shop/raw/branch/main/docs/screenshots/step-06.png)
 
 ## Aliran status
 

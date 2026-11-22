@@ -4,7 +4,7 @@
 
 Pembeli yang telah log masuk kini boleh mengumpul produk dalam bakul, menukar kuantiti, membuang baris dan melihat jumlah.
 
-![Langkah 4](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/097-assignment-an-nnline-shop/raw/branch/main/docs/screenshots/step-04.png)
+![Langkah 4](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/097-assignment-an-online-shop/raw/branch/main/docs/screenshots/step-04.png)
 
 ## Model
 

@@ -4,7 +4,7 @@
 
 Besøgende kan nu registrere sig, logge ind og logge ud, og butikken har en admin-rolle.
 
-![Trin 3](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/097-assignment-an-nnline-shop/raw/branch/main/docs/screenshots/step-03.png)
+![Trin 3](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/097-assignment-an-online-shop/raw/branch/main/docs/screenshots/step-03.png)
 
 ## Hashing af adgangskoder
 

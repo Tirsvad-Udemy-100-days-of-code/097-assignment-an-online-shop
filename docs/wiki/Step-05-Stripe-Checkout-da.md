@@ -4,7 +4,7 @@
 
 Kunden betaler gennem Stripe Checkout i testtilstand, og kun en betalt session opretter en ordre.
 
-![Trin 5](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/097-assignment-an-nnline-shop/raw/branch/main/docs/screenshots/step-05.png)
+![Trin 5](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/097-assignment-an-online-shop/raw/branch/main/docs/screenshots/step-05.png)
 
 ## Forløbet
 

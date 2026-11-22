@@ -4,7 +4,7 @@
 
 Butikken gemmer nu produkter i SQLite og viser dem: et gitter på forsiden og en detaljeside for hvert produkt.
 
-![Trin 2](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/097-assignment-an-nnline-shop/raw/branch/main/docs/screenshots/step-02.png)
+![Trin 2](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/097-assignment-an-online-shop/raw/branch/main/docs/screenshots/step-02.png)
 
 ## Lagdeling
 
