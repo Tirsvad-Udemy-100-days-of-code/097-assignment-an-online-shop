@@ -1,0 +1,11 @@
+{% macro product_grid(products, site) -%}
+{% if not products -%}
+<p class="product-grid-empty">There are no products yet.</p>
+{%- else -%}
+<ul class="product-grid">
+{% for product in products -%}
+<li class="product-card"><span class="tag">{{ site.sale_tag }}</span><a href="{{ url_for('catalog.show', product_id=product.id) }}"><img src="{{ url_for('static', filename=product.image) }}" alt="{{ product.name }}"><h3 class="product-name">{{ product.name }}</h3></a><p class="product-description">{{ product.description }}</p><p class="product-price">{{ product.price_cents | price }}</p></li>
+{% endfor -%}
+</ul>
+{%- endif %}
+{%- endmacro %}

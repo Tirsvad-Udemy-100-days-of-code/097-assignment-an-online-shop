@@ -8,7 +8,7 @@ Det første trin bygger ikke noget, kunden kan bruge endnu. Det opsætter værkt
 
 ## Opsætning
 
-- **Python 3.14 eller nyere og ingen afhængigheder ved kørsel.** `pyproject.toml` har kun en `dev`-gruppe: pytest, pytest-cov, ruff og mypy.
+- **Python 3.14 eller nyere.** `pyproject.toml` har en `dev`-gruppe: pytest, pytest-cov, ruff og mypy. Flask, den eneste direkte afhængighed ved kørsel, kom til i trin 2 (ADR-0002).
 - **Et lokalt virtuelt miljø.** `python -m venv .venv`, aktivér det, kør derefter `python -m pip install --upgrade pip` og `python -m pip install -e ".[dev]"`. Miljøet holder projektets pakker adskilt fra systemets Python.
 - **Kør butikken** med `python -m online_shop` og åbn http://127.0.0.1:8000/.
 
@@ -28,6 +28,6 @@ Hver værdi, som mere end ét sted bruger, står én gang i `src/online_shop/con
 
 ## Det lærte jeg
 
-- Standardbiblioteket er nok til at servere en side: `http.server` plus en lille router.
+- Den første side blev serveret med `http.server` og en lille router; trin 2 erstattede dem med Flask, da det håndskrevne lag begyndte at vokse.
 - Konstanter i ét modul og lag i hver sin mappe fra dag ét koster lidt og sparer omarbejde senere.
 - En test, der starter den rigtige server på en ledig port, fanger fejl, som enhedstest overser.

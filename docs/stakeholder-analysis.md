@@ -11,8 +11,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-22 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version | [bfd7827] |
-| 2026-11-22 | Accepted | Jens Tirsvad Nielsen | S01 | Accepted after review RC-001; stand-in review, not independent | [bfd7827] |
+| 2026-11-22 | Deprecated | Jens Tirsvad Nielsen | S01 | Accepted after review RC-001; stand-in review, not independent | [bfd7827] |
+| 2026-11-22 | Accepted | Jens Tirsvad Nielsen | S01 | Reworded the payment conflict for Flask per ADR-0002; accepted after review RC-015, stand-in review, not independent | [4d90862] |
 
 ---
 
@@ -65,7 +65,7 @@ and maps each concern to a FURPS+ attribute so the plan can answer it.
 
 | Conflict | Stakeholders | Mitigation |
 | --- | --- | --- |
-| Real payment through Stripe versus no runtime dependencies | S01, S03 | Call the Stripe REST API with the standard library, behind a port |
+| Real payment through Stripe versus a short dependency list | S01, S03 | Call the Stripe REST API with the standard library, behind a port; Flask is the only direct dependency |
 | Three-language wiki effort versus delivery date | S01, S02 | English first; translations follow page by page within the same milestone |
 
 ## Traceability Analysis
@@ -92,3 +92,4 @@ and maps each concern to a FURPS+ attribute so the plan can answer it.
 
 [BC-001]: ./business-case.md
 [bfd7827]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/097-assignment-an-nnline-shop/commit/bfd782710394ff04fce3f51f464e5e342cbeb4ca
+[4d90862]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/097-assignment-an-online-shop/commit/4d908627163f1be713505164ac4973b394740c4f

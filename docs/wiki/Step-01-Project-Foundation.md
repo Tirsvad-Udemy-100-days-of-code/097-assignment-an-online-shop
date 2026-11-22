@@ -8,7 +8,7 @@ The first step builds nothing the shopper can use yet. It sets up the tooling an
 
 ## Setup
 
-- **Python 3.14 or newer and no runtime dependencies.** `pyproject.toml` lists only a `dev` group: pytest, pytest-cov, ruff and mypy.
+- **Python 3.14 or newer.** `pyproject.toml` lists a `dev` group: pytest, pytest-cov, ruff and mypy. Flask, the only direct runtime dependency, was added in step 2 (ADR-0002).
 - **A local virtual environment.** `python -m venv .venv`, activate it, then `python -m pip install --upgrade pip` and `python -m pip install -e ".[dev]"`. The environment keeps the project's packages apart from the system Python.
 - **Run the shop** with `python -m online_shop` and open http://127.0.0.1:8000/.
 
@@ -28,6 +28,6 @@ Every literal that more than one place needs lives once in `src/online_shop/cons
 
 ## What I learned
 
-- The standard library is enough to serve a page: `http.server` plus a small router.
+- The first page was served with `http.server` and a small router; step 2 replaced them with Flask once the hand-written layer started to grow.
 - Putting constants in one module and layers in separate folders from day one costs little and saves rework later.
 - A test that starts the real server on a free port catches mistakes that unit tests miss.

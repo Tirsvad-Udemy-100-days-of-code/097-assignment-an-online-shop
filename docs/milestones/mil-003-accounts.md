@@ -11,8 +11,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-22 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version | [bfd7827] |
-| 2026-11-22 | Accepted | Jens Tirsvad Nielsen | S01 | Accepted after review RC-007; stand-in review, not independent | [bfd7827] |
+| 2026-11-22 | Deprecated | Jens Tirsvad Nielsen | S01 | Accepted after review RC-007; stand-in review, not independent | [bfd7827] |
+| 2026-11-22 | Accepted | Jens Tirsvad Nielsen | S01 | Task 3 uses Flask's signed session per ADR-0002; accepted after review RC-018, stand-in review, not independent | [4d90862] |
 
 ---
 
@@ -65,7 +65,7 @@ Registration, login and logout with scrypt password hashes, signed session cooki
 | --- | --- | --- | --- | --- |
 | 1 | Model users and password hashing | Add the User entity, email and password rules, and a scrypt hasher from hashlib behind a port, with unit tests. | No |  |
 | 2 | Implement the user repository | Add the SQLite user repository and the register and authenticate use cases, with integration tests. | No |  |
-| 3 | Add signed sessions and CSRF tokens | Add an HMAC-signed session cookie with expiry and per-session CSRF tokens using hmac and secrets, with tests for tampering. | No |  |
+| 3 | Add signed sessions and CSRF tokens | Add Flask's signed session cookie with expiry and per-session CSRF tokens using hmac and secrets, with tests for tampering. | No |  |
 | 4 | Build the registration and login pages | Add the register, login and logout controllers and pages with error messages and a navigation bar showing the user. | No |  |
 | 5 | Add the admin role | Add the role field, an admin created from environment configuration, and a guard for admin-only routes, with tests. | No |  |
 | 6 | Capture step screenshot for step 3 | Capture docs/screenshots/step-03.png of the login and registration pages and add it to the README. | No |  |
@@ -76,3 +76,4 @@ Registration, login and logout with scrypt password hashes, signed session cooki
 
 [BC-001]: ../business-case.md
 [bfd7827]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/097-assignment-an-nnline-shop/commit/bfd782710394ff04fce3f51f464e5e342cbeb4ca
+[4d90862]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/097-assignment-an-online-shop/commit/4d908627163f1be713505164ac4973b394740c4f

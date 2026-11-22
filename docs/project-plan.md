@@ -11,8 +11,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-22 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version | [bfd7827] |
-| 2026-11-22 | Accepted | Jens Tirsvad Nielsen | S01 | Accepted after review RC-003; stand-in review, not independent | [bfd7827] |
+| 2026-11-22 | Deprecated | Jens Tirsvad Nielsen | S01 | Accepted after review RC-003; stand-in review, not independent | [bfd7827] |
+| 2026-11-22 | Accepted | Jens Tirsvad Nielsen | S01 | Open issue about Flask updated per ADR-0002; accepted after review RC-016, stand-in review, not independent | [4d90862] |
 
 ---
 
@@ -90,7 +90,7 @@ the end date of 2026-12-11 is reported as at risk in the run summary.
 - No Domain Dictionary (`DICT`) or Governance document exists; the vocabulary is small and every owner is S01, so neither is needed at this size.
 - The PlantUML server setting in `docs/artifact-registry.md` is empty, so the Gantt chart is not rendered by the check script.
 - The framework's session prompt-log folder is kept out of the repository through `.gitignore`, because the Product Owner's rule on wording applies to every artifact.
-- The assignment suggests Flask; ADR-0001 chooses the standard library to keep the project free of runtime dependencies.
+- The assignment suggests Flask; ADR-0002 adopts Flask as the only direct runtime dependency and supersedes ADR-0001 for the web layer.
 - The dry-run output of `sync-project.sh` is the plan the Product Owner accepts; `--apply` runs after acceptance, because the publish workflow is not installed.
 
 ---
@@ -105,3 +105,4 @@ the end date of 2026-12-11 is reported as at risk in the run summary.
 [MIL-006]: ./milestones/mil-006-order-kanban.md
 [MIL-007]: ./milestones/mil-007-wiki-release.md
 [bfd7827]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/097-assignment-an-nnline-shop/commit/bfd782710394ff04fce3f51f464e5e342cbeb4ca
+[4d90862]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/097-assignment-an-online-shop/commit/4d908627163f1be713505164ac4973b394740c4f

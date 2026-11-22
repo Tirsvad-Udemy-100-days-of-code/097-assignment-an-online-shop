@@ -8,7 +8,7 @@ Langkah pertama belum membina apa-apa yang boleh digunakan oleh pembeli. Ia meny
 
 ## Persediaan
 
-- **Python 3.14 atau lebih baharu dan tiada kebergantungan semasa larian.** `pyproject.toml` hanya mempunyai kumpulan `dev`: pytest, pytest-cov, ruff dan mypy.
+- **Python 3.14 atau lebih baharu.** `pyproject.toml` mempunyai kumpulan `dev`: pytest, pytest-cov, ruff dan mypy. Flask, satu-satunya kebergantungan langsung semasa larian, ditambah pada langkah 2 (ADR-0002).
 - **Persekitaran maya tempatan.** `python -m venv .venv`, aktifkannya, kemudian `python -m pip install --upgrade pip` dan `python -m pip install -e ".[dev]"`. Persekitaran ini mengasingkan pakej projek daripada Python sistem.
 - **Jalankan kedai** dengan `python -m online_shop` dan buka http://127.0.0.1:8000/.
 
@@ -28,6 +28,6 @@ Setiap nilai yang diperlukan lebih daripada satu tempat disimpan sekali dalam `s
 
 ## Apa yang saya pelajari
 
-- Pustaka standard cukup untuk menyajikan halaman: `http.server` dan penghala kecil.
+- Halaman pertama disajikan dengan `http.server` dan penghala kecil; langkah 2 menggantikannya dengan Flask apabila lapisan tulisan tangan mula membesar.
 - Pemalar dalam satu modul dan lapisan dalam folder berasingan sejak hari pertama memerlukan sedikit usaha dan menjimatkan kerja semula.
 - Ujian yang memulakan pelayan sebenar pada port kosong menangkap kesilapan yang terlepas daripada ujian unit.

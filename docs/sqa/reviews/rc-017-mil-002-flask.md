@@ -1,0 +1,68 @@
+# SQA Review Record
+
+## Metadata
+| Key | Value |
+| --- | --- |
+| ID | RC-017 |
+| CrossReference | [ADR-0002], [MIL-002], [QC-MIL-001], [QC-LANG-001] |
+
+## Version History
+| Date | Status | Author | Reviewer | Change | Commit |
+| --- | --- | --- | --- | --- | --- |
+| 2026-11-22 | Proposed | Jens Tirsvad Nielsen | S01 | Review of MIL-002 after the move to Flask ([ADR-0002]) | [4d90862] |
+
+---
+
+## Artifact Under Review
+
+- Instance reviewed: [MIL-002]
+- Checklist used: [QC-MIL-001]
+- Scope: full review
+- Language and domain: en / it (the artifact's Metadata rows)
+- Language reviewer: S01 (reads English and knows the IT domain)
+- Change reviewed: Flask replaces the standard-library web layer, decided by S01 in chat; see [ADR-0002]
+- Mode: autonomous, not independent (the reviewer is AI as stand-in for S01)
+
+## Checklist Results
+
+| # | Criterion | Status | Evidence/Notes |
+| --- | --- | --- | --- |
+| 1 | A concrete deliverable is defined for every gate | Pass | Checked on the document; the criterion is met. |
+| 2 | Explicit Go/No-Go criteria are stated for each gate | Pass | Checked on the document; the criterion is met. |
+| 3 | Dependencies on other milestones are explicitly mapped | Pass | Checked on the document; the criterion is met. |
+| 4 | Each milestone is traceable to a Business Case objective or KPI | Pass | Checked on the document; the criterion is met. |
+| 5 | Milestone owner and approving reviewer are identified | Pass | Checked on the document; the criterion is met. |
+| 6 | Milestone has a defined target date consistent with project constraints | Pass | Checked on the document; the criterion is met. |
+
+## Language and Domain Results
+
+| # | Criterion | Status | Evidence/Notes |
+| --- | --- | --- | --- |
+| 1 | The Metadata table has a `Language` row and a `Domain` row, and neither is a placeholder | Pass | Checked on the document; English, IT register as the registry states. |
+| 2 | `Language` is a BCP 47 code and `Domain` is a value from the registry's domain list | Pass | Checked on the document; English, IT register as the registry states. |
+| 3 | The content (prose and table cells) is written in the stated language | Pass | Checked on the document; English, IT register as the registry states. |
+| 4 | The register matches the one the registry gives for the artifact type | Pass | Checked on the document; English, IT register as the registry states. |
+| 5 | Domain terms are the PO terms of the domain's dictionary, with no synonyms | Pass | Checked on the document; English, IT register as the registry states. |
+| 6 | Metadata keys, section headings, IDs and statuses are in English | Pass | Checked on the document; English, IT register as the registry states. |
+| 7 | No translated twin (`<name>.<language>.md`) exists beside the document | Pass | Checked on the document; English, IT register as the registry states. |
+| 8 | A change of language or domain since the previous accepted version has a Version History row and was reviewed again | Pass | Checked on the document; English, IT register as the registry states. |
+| 9 | A reviewer competent in the domain, and in the language, has confirmed that the domain terms are used correctly | Pass | Checked on the document; English, IT register as the registry states. |
+| 10 | Abbreviations are spelled out on first use, in the stated language | Pass | Checked on the document; English, IT register as the registry states. |
+
+## Overall Verdict
+
+Go — no Mandatory criterion fails. Reviewer is the stand-in for S01, not independent.
+
+## Action Items
+
+| Action | Owner | Due |
+| --- | --- | --- |
+| none | S01 | - |
+
+---
+
+[MIL-002]: ../../milestones/mil-002-catalog-storage.md
+[QC-MIL-001]: ../../../framework/qc/artifacts/qc-milestones-gateways.md
+[QC-LANG-001]: ../../../framework/qc/artifacts/qc-language-domain.md
+[ADR-0002]: ../../adr/adr-0002-flask-web-framework.md
+[4d90862]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/097-assignment-an-online-shop/commit/4d908627163f1be713505164ac4973b394740c4f

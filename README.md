@@ -1,6 +1,6 @@
 # 🚀 Online Shop
 
-An online shop built with the Python standard library, SQLite, Stripe Checkout and plain JavaScript, with no runtime dependencies. It is Day 97 of the 100 Days of Code bootcamp: products, a basket, registration and login, payment in a Stripe sandbox, and a Kanban board where the shop owner follows each order. It is for course participants who want to compare solutions and for visitors who look for ideas.
+An online shop built with Flask, SQLite, Stripe Checkout and plain JavaScript, with Flask as the only direct runtime dependency. It is Day 97 of the 100 Days of Code bootcamp: products, a basket, registration and login, payment in a Stripe sandbox, and a Kanban board where the shop owner follows each order. It is for course participants who want to compare solutions and for visitors who look for ideas.
 
 ## 📚 Table of Contents
 
@@ -21,7 +21,7 @@ Shoppers browse products, keep them in a basket, register, sign in and pay throu
 
 | Folder | What it is for |
 | --- | --- |
-| `src/online_shop/` | The program: `domain`, `application`, `infrastructure` and `presentation` layers; `constants.py` holds every constant |
+| `src/online_shop/` | The program: `domain`, `application`, `infrastructure` and `presentation` layers (the Flask app and its templates live in `presentation`); `constants.py` holds every constant |
 | `tests/` | `unit`, `integration` and `e2e` tests, run with pytest |
 | `docs/` | Project documents, wiki pages (`docs/wiki/`) and screenshots (`docs/screenshots/`) |
 | `tools/screenshots/` | The Docker container that opens the app in a headless browser and takes the screenshots |
@@ -29,7 +29,7 @@ Shoppers browse products, keep them in a basket, register, sign in and pay throu
 
 ## 📋 Requirements
 
-- Python 3.14 or newer, to run the program. The program has no runtime dependencies.
+- Python 3.14 or newer, to run the program. The program's only direct runtime dependency is Flask, which `pip` installs for you.
 - `pip` and `venv`, which come with Python, to create the local environment.
 - pytest, pytest-cov, ruff and mypy for development; they are installed by the `dev` group below.
 - Docker, only to take screenshots and run the browser tests.
@@ -73,6 +73,7 @@ Then open <http://127.0.0.1:8000/> in a browser. Stop the server with `Ctrl+C`. 
 | Step | What it shows |
 | --- | --- |
 | 1. Project foundation | The first page of the shop ![Step 1](docs/screenshots/step-01.png) |
+| 2. Product catalog and storage | The dark catalog on desktop and phone, rendered by Flask ![Step 2](docs/screenshots/step-02.png) |
 
 Screenshots are made in a Docker container, never on the desktop:
 
