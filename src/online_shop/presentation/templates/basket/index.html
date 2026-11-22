@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="basket-panel">
+<h1>{{ site.basket.title }}</h1>
+{% if form_error %}<p class="form-error" role="alert">{{ form_error }}</p>{% endif %}
+{% if basket.unavailable_count %}<p class="form-hint">{{ site.basket.unavailable }}</p>{% endif %}
+{% if not basket.lines %}
+<p class="basket-empty">{{ site.basket.empty }}</p>
+<p><a class="button" href="{{ url_for('home.show') }}#shop">{{ site.basket.continue }}</a></p>
+{% else %}
+<ul class="basket-lines">
+{% for line in basket.lines -%}
+<li class="basket-line">
+<img src="{{ url_for('static', filename=line.image) }}" alt="{{ line.name }}">
+<div class="basket-line-text"><a class="basket-line-name" href="{{ url_for('catalog.show', product_id=line.product_id) }}">{{ line.name }}</a><p class="product-price">{{ line.unit_price_cents | price }}</p></div>
+<form class="basket-update" method="post" action="{{ url_for('basket.update') }}">{% include "_csrf.html" %}<input type="hidden" name="product_id" value="{{ line.product_id }}"><label class="visually-hidden" for="quantity-{{ line.product_id }}">{{ site.basket.quantity }}</label><input id="quantity-{{ line.product_id }}" name="quantity" type="number" inputmode="numeric" min="0" max="{{ site.basket.max_quantity }}" value="{{ line.quantity }}" required><button class="button" type="submit">{{ site.basket.update_label }}</button></form>
+<p class="basket-line-total">{{ line.line_total_cents | price }}</p>
+<form class="basket-remove" method="post" action="{{ url_for('basket.remove') }}">{% include "_csrf.html" %}<input type="hidden" name="product_id" value="{{ line.product_id }}"><button class="link-button" type="submit">{{ site.basket.remove }}</button></form>
+</li>
+{% endfor -%}
+</ul>
+<p class="basket-total"><span>{{ site.basket.total }}</span> <strong>{{ basket.total_cents | price }}</strong></p>
+<p><a href="{{ url_for('home.show') }}#shop">{{ site.basket.continue }}</a></p>
+{% endif %}
+</section>
+{% endblock %}

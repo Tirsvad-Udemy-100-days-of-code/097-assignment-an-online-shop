@@ -9,3 +9,4 @@ Kedai dalam talian yang dibina dengan Flask, SQLite, Stripe Checkout dan JavaScr
 | 1 | [Asas projek](Step-01-Project-Foundation-ms) |
 | 2 | [Katalog produk dan storan](Step-02-Product-Catalog-ms) |
 | 3 | [Pendaftaran dan log masuk](Step-03-Registration-and-Login-ms) |
+| 4 | [Bakul beli-belah](Step-04-Shopping-Basket-ms) |

@@ -85,6 +85,7 @@ For example, in PowerShell: `$env:SHOP_ADMIN_EMAIL = "admin@example.com"; $env:S
 | 1. Project foundation | The first page of the shop ![Step 1](docs/screenshots/step-01.png) |
 | 2. Product catalog and storage | The dark catalog on desktop and phone, rendered by Flask ![Step 2](docs/screenshots/step-02.png) |
 | 3. Registration and login | The login page on desktop and the register page on a phone ![Step 3](docs/screenshots/step-03.png) |
+| 4. Shopping basket | A filled basket on desktop and phone ![Step 4](docs/screenshots/step-04.png) |
 
 Screenshots are made in a Docker container, never on the desktop:
 

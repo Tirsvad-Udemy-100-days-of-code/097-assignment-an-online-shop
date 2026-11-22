@@ -6,7 +6,7 @@ from pathlib import Path
 import pytest
 from flask.testing import FlaskClient
 
-from fakes import FakePasswordHasher, FakeUserRepository
+from fakes import FakeBasketRepository, FakePasswordHasher, FakeUserRepository
 from online_shop import constants
 from online_shop.domain.money import Money
 from online_shop.domain.product import Product
@@ -32,6 +32,7 @@ def build_client(products: list[Product]) -> FlaskClient:
     app = create_app_for(
         FakeProductRepository(products),
         FakeUserRepository(),
+        FakeBasketRepository(),
         FakePasswordHasher(),
         "test-secret",
     )
@@ -147,3 +148,20 @@ def test_wrong_method_gives_405_page(client: FlaskClient) -> None:
 def test_create_app_builds_the_database(tmp_path: Path) -> None:
     app = create_app(tmp_path / "shop.sqlite3")
     assert app.test_client().get("/").status_code == 200
+
+
+def _text_keys(texts: object) -> list[str]:
+    if not isinstance(texts, dict):
+        return []
+    keys = [str(key) for key in texts]
+    for value in texts.values():
+        keys.extend(_text_keys(value))
+    return keys
+
+
+def test_site_context_keys_do_not_collide_with_dict_attributes() -> None:
+    from online_shop.presentation.app import _site_context
+
+    keys = _text_keys(_site_context()["site"])
+    assert keys
+    assert [key for key in keys if hasattr(dict, key)] == []

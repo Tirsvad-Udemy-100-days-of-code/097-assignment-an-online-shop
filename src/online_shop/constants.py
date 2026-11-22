@@ -170,3 +170,32 @@ TEXT_HAVE_ACCOUNT = "Already registered?"
 TEXT_SIGNED_IN_AS = "Signed in as"
 TEXT_ADMIN_TITLE = "Administration"
 TEXT_ADMIN_BODY = "Only administrators see this page."
+
+## @brief Basket limits: a line holds 1 to BASKET_MAX_QUANTITY pieces; setting a
+#  line to BASKET_REMOVE_QUANTITY removes it. The default is for "add".
+BASKET_MIN_QUANTITY = 1
+BASKET_MAX_QUANTITY = 99
+BASKET_REMOVE_QUANTITY = 0
+BASKET_DEFAULT_ADD_QUANTITY = 1
+
+## @brief Messages of the basket rules.
+ERROR_QUANTITY_INVALID = "Enter a whole number of pieces."
+ERROR_QUANTITY_LIMIT = (
+    f"A basket holds at most {BASKET_MAX_QUANTITY} pieces of one product."
+)
+ERROR_BASKET_INVALID = "A basket needs a positive user id."
+
+## @brief Form field names of the basket forms.
+FIELD_PRODUCT_ID = "product_id"
+FIELD_QUANTITY = "quantity"
+
+## @brief Texts of the basket page, the add buttons and the header.
+TEXT_BASKET_TITLE = "Your basket"
+TEXT_BASKET_ADD = "Add to basket"
+TEXT_BASKET_UPDATE = "Update"
+TEXT_BASKET_REMOVE = "Remove"
+TEXT_BASKET_TOTAL = "Total"
+TEXT_BASKET_QUANTITY = "Quantity"
+TEXT_BASKET_EMPTY = "Your basket is empty."
+TEXT_BASKET_CONTINUE = "Continue shopping"
+TEXT_BASKET_UNAVAILABLE = "Some products are no longer sold and are not shown."

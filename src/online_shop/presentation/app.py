@@ -9,18 +9,27 @@ from flask import Flask
 from werkzeug.exceptions import HTTPException
 
 from online_shop import constants
+from online_shop.application.add_to_basket import AddToBasket
 from online_shop.application.authenticate_user import AuthenticateUser
+from online_shop.application.count_basket_items import CountBasketItems
 from online_shop.application.ensure_admin import EnsureAdmin
 from online_shop.application.get_product import GetProduct
 from online_shop.application.get_user import GetUser
 from online_shop.application.list_products import ListProducts
 from online_shop.application.register_user import RegisterUser
+from online_shop.application.remove_from_basket import RemoveFromBasket
+from online_shop.application.update_basket_line import UpdateBasketLine
+from online_shop.application.view_basket import ViewBasket
+from online_shop.domain.basket_repository import BasketRepository
 from online_shop.domain.password_hasher import PasswordHasher
 from online_shop.domain.product_repository import ProductRepository
 from online_shop.domain.user_repository import UserRepository
 from online_shop.infrastructure.database import migrate, seed_products
 from online_shop.infrastructure.scrypt_password_hasher import ScryptPasswordHasher
 from online_shop.infrastructure.settings import Settings
+from online_shop.infrastructure.sqlite_basket_repository import (
+    SqliteBasketRepository,
+)
 from online_shop.infrastructure.sqlite_product_repository import (
     SqliteProductRepository,
 )
@@ -31,12 +40,16 @@ from online_shop.presentation.features.admin.admin_controller import (
 from online_shop.presentation.features.auth.auth_controller import (
     create_auth_blueprint,
 )
+from online_shop.presentation.features.basket.basket_controller import (
+    create_basket_blueprint,
+)
 from online_shop.presentation.features.catalog.catalog_controller import (
     create_catalog_blueprint,
 )
 from online_shop.presentation.features.home.home_controller import (
     create_home_blueprint,
 )
+from online_shop.presentation.shared.basket_count import BasketCount
 from online_shop.presentation.shared.csrf import CsrfGuard
 from online_shop.presentation.shared.current_user import CurrentUser
 from online_shop.presentation.shared.errors import error_page
@@ -49,6 +62,19 @@ _ERROR_MESSAGES = {
     HTTPStatus.NOT_FOUND: constants.ERROR_NOT_FOUND,
     HTTPStatus.METHOD_NOT_ALLOWED: constants.ERROR_METHOD_NOT_ALLOWED,
     HTTPStatus.FORBIDDEN: constants.ERROR_FORBIDDEN,
+}
+
+_BASKET_TEXTS = {
+    "title": constants.TEXT_BASKET_TITLE,
+    "add": constants.TEXT_BASKET_ADD,
+    "update_label": constants.TEXT_BASKET_UPDATE,
+    "remove": constants.TEXT_BASKET_REMOVE,
+    "total": constants.TEXT_BASKET_TOTAL,
+    "quantity": constants.TEXT_BASKET_QUANTITY,
+    "empty": constants.TEXT_BASKET_EMPTY,
+    "continue": constants.TEXT_BASKET_CONTINUE,
+    "unavailable": constants.TEXT_BASKET_UNAVAILABLE,
+    "max_quantity": constants.BASKET_MAX_QUANTITY,
 }
 
 _AUTH_TEXTS = {
@@ -90,6 +116,7 @@ def _site_context() -> dict[str, object]:
             "brand_tiles": range(constants.BRAND_TILE_COUNT),
             "brand_tile_label": constants.BRAND_TILE_LABEL,
             "auth": _AUTH_TEXTS,
+            "basket": _BASKET_TEXTS,
         }
     }
 
@@ -102,6 +129,7 @@ def _handle_http_error(error: HTTPException) -> tuple[str, int]:
 def create_app_for(
     products: ProductRepository,
     users: UserRepository,
+    baskets: BasketRepository,
     hasher: PasswordHasher,
     secret_key: str,
 ) -> Flask:
@@ -109,6 +137,7 @@ def create_app_for(
 
     @param products The port that reads the catalog.
     @param users The port that stores users.
+    @param baskets The port that stores baskets.
     @param hasher The port that hashes passwords.
     @param secret_key The key that signs the session cookie.
     @return The Flask application.
@@ -120,6 +149,9 @@ def create_app_for(
     app.before_request(CsrfGuard(sessions).check)
     app.context_processor(_site_context)
     app.context_processor(current_user.template_context)
+    app.context_processor(
+        BasketCount(CountBasketItems(baskets), sessions).template_context
+    )
     app.add_template_filter(format_price, "price")
     app.register_blueprint(create_home_blueprint(ListProducts(products)))
     app.register_blueprint(create_catalog_blueprint(GetProduct(products)))
@@ -129,6 +161,15 @@ def create_app_for(
         )
     )
     app.register_blueprint(create_admin_blueprint(current_user))
+    app.register_blueprint(
+        create_basket_blueprint(
+            current_user,
+            ViewBasket(baskets, products),
+            AddToBasket(baskets, products),
+            UpdateBasketLine(baskets, products),
+            RemoveFromBasket(baskets),
+        )
+    )
     app.register_error_handler(HTTPException, _handle_http_error)
     return app
 
@@ -160,5 +201,9 @@ def create_app(database_path: Path, settings: Settings | None = None) -> Flask:
             settings.admin_email, settings.admin_password
         )
     return create_app_for(
-        SqliteProductRepository(database_path), users, hasher, secret_key
+        SqliteProductRepository(database_path),
+        users,
+        SqliteBasketRepository(database_path),
+        hasher,
+        secret_key,
     )

@@ -14,7 +14,7 @@ import threading
 from collections.abc import Callable
 from pathlib import Path
 
-from playwright.sync_api import Browser, Page, sync_playwright
+from playwright.sync_api import Browser, BrowserContext, Page, sync_playwright
 from werkzeug.serving import make_server
 
 from online_shop.presentation.app import create_app
@@ -51,6 +51,27 @@ def step_03(page: Page, base_url: str) -> None:
     page.wait_for_selector("section.auth-panel form")
 
 
+SHOT_EMAIL = "shopper@example.com"
+SHOT_PASSWORD = "correct horse battery"
+## Product ids (seed order) put in the basket for step 4; the first goes in twice.
+SHOT_BASKET_PRODUCTS = (1, 2, 1, 4)
+
+
+def step_04(page: Page, base_url: str) -> None:
+    """@brief Register through the real form, fill the basket, open the basket page."""
+    page.goto(base_url + "/register")
+    page.fill("#email", SHOT_EMAIL)
+    page.fill("#password", SHOT_PASSWORD)
+    with page.expect_navigation():
+        page.click("section.auth-panel button[type=submit]")
+    for product_id in SHOT_BASKET_PRODUCTS:
+        page.goto(f"{base_url}/products/{product_id}")
+        with page.expect_navigation():
+            page.click("form.add-form button[type=submit]")
+    page.goto(base_url + "/basket")
+    page.wait_for_selector("ul.basket-lines li.basket-line")
+
+
 def _png_base64(data: bytes) -> str:
     return base64.b64encode(data).decode("ascii")
 
@@ -61,6 +82,7 @@ def compose_desktop_and_phone(
     desktop: bytes,
     phone_path: str = "/",
     phone_selector: str = "ul.product-grid li.product-card",
+    context: BrowserContext | None = None,
 ) -> bytes:
     """@brief Place the desktop shot and a phone-sized shot side by side.
 
@@ -69,9 +91,15 @@ def compose_desktop_and_phone(
     @param desktop PNG bytes of the desktop view.
     @param phone_path The page the phone frame shows.
     @param phone_selector A selector that is present once that page is ready.
+    @param context The browser context to open the phone page in, so it shares
+        the cookies (the sign-in) of the desktop page; a fresh one when omitted.
     @return PNG bytes of the composed image.
     """
-    phone_page = browser.new_page(viewport=PHONE_VIEWPORT)
+    if context is None:
+        phone_page = browser.new_page(viewport=PHONE_VIEWPORT)
+    else:
+        phone_page = context.new_page()
+        phone_page.set_viewport_size(PHONE_VIEWPORT)
     phone_page.goto(base_url + phone_path)
     phone_page.wait_for_selector(phone_selector)
     phone = phone_page.screenshot()
@@ -91,12 +119,14 @@ SCENARIOS: dict[str, Callable[[Page, str], None]] = {
     "step-01": step_01,
     "step-02": step_02,
     "step-03": step_03,
+    "step-04": step_04,
 }
 
 ## Steps that compose a desktop shot with a phone frame, and what the frame shows.
 PHONE_PAGES: dict[str, tuple[str, str]] = {
     "step-02": ("/", "ul.product-grid li.product-card"),
     "step-03": ("/register", "section.auth-panel form"),
+    "step-04": ("/basket", "ul.basket-lines li.basket-line"),
 }
 
 
@@ -112,13 +142,16 @@ def main(step: str) -> int:
     host, port = server.server_address[:2]
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch()
-        page = browser.new_page(viewport=VIEWPORT)
+        context = browser.new_context(viewport=VIEWPORT)
+        page = context.new_page()
         base = f"http://{host!s}:{port}"
         SCENARIOS[step](page, base)
         OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
         shot = page.screenshot()
         if step in PHONE_PAGES:
-            shot = compose_desktop_and_phone(browser, base, shot, *PHONE_PAGES[step])
+            shot = compose_desktop_and_phone(
+                browser, base, shot, *PHONE_PAGES[step], context=context
+            )
         (OUTPUT_DIR / f"{step}.png").write_bytes(shot)
         browser.close()
     server.shutdown()
