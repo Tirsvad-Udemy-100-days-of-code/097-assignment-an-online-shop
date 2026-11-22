@@ -6,6 +6,7 @@ from pathlib import Path
 import pytest
 from flask.testing import FlaskClient
 
+from fakes import FakePasswordHasher, FakeUserRepository
 from online_shop import constants
 from online_shop.domain.money import Money
 from online_shop.domain.product import Product
@@ -28,7 +29,13 @@ class FakeProductRepository:
 
 def build_client(products: list[Product]) -> FlaskClient:
     """Create an app with the real templates and a fake repository."""
-    return create_app_for(FakeProductRepository(products)).test_client()
+    app = create_app_for(
+        FakeProductRepository(products),
+        FakeUserRepository(),
+        FakePasswordHasher(),
+        "test-secret",
+    )
+    return app.test_client()
 
 
 MUG = Product(1, "Mug", "Ceramic mug", Money(1205), "mug.svg")
@@ -130,7 +137,9 @@ def test_unknown_path_gives_404_page(client: FlaskClient) -> None:
 
 
 def test_wrong_method_gives_405_page(client: FlaskClient) -> None:
-    response = client.post("/")
+    with client.session_transaction() as session:
+        session[constants.SESSION_CSRF_KEY] = "token"
+    response = client.post("/", data={constants.CSRF_FORM_FIELD: "token"})
     assert response.status_code == 405
     assert constants.ERROR_METHOD_NOT_ALLOWED in response.get_data(as_text=True)
 

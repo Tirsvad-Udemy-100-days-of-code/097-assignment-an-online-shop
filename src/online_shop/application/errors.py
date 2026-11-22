@@ -3,3 +3,7 @@
 
 class ProductNotFoundError(LookupError):
     """@brief No product has the requested id."""
+
+
+class AuthenticationFailedError(Exception):
+    """@brief The email or the password is wrong; the reason is never given."""

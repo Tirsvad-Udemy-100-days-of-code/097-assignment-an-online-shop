@@ -1,9 +1,11 @@
 """@brief The entry point: builds the application and starts the web server."""
 
 import logging
+import os
 from pathlib import Path
 
 from online_shop import constants
+from online_shop.infrastructure.settings import Settings
 from online_shop.presentation.app import create_app
 
 
@@ -19,4 +21,6 @@ def main(
     @param database_path The SQLite file.
     """
     logging.basicConfig(level=logging.INFO)
-    create_app(database_path).run(host=host, port=port, debug=False)
+    create_app(database_path, Settings.from_environment(os.environ)).run(
+        host=host, port=port, debug=False
+    )

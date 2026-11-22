@@ -8,3 +8,4 @@ En netbutik bygget med Flask, SQLite, Stripe Checkout og almindelig JavaScript, 
 | --- | --- |
 | 1 | [Projektets fundament](Step-01-Project-Foundation-da) |
 | 2 | [Produktkatalog og lagring](Step-02-Product-Catalog-da) |
+| 3 | [Registrering og login](Step-03-Registration-and-Login-da) |
