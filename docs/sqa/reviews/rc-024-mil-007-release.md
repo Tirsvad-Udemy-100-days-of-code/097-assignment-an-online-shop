@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-23 | Proposed | Jens Tirsvad Nielsen | S01 | Review of the MIL-007 deliverable (wiki, reflection, final checks) | pending |
+| 2026-11-23 | Proposed | Jens Tirsvad Nielsen | S01 | Review of the MIL-007 deliverable (wiki, reflection, final checks) | [5110876] |
 
 ---
 
@@ -62,3 +62,4 @@ Go: no Mandatory criterion fails. Reviewer is the stand-in for S01, not independ
 [MIL-007]: ../../milestones/mil-007-wiki-release.md
 [QC-PY-001]: ../../../framework/qc/code/qc-programming-python.md
 [ADR-0002]: ../../adr/adr-0002-flask-web-framework.md
+[5110876]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/097-assignment-an-online-shop/commit/51108767900a52e8f82f7e1a6eaf5864b4947ae3
