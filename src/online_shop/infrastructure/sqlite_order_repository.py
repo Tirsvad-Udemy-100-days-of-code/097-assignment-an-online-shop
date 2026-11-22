@@ -12,10 +12,6 @@ from online_shop.domain.money import Money
 from online_shop.domain.order import Order, OrderLine, OrderStatus
 from online_shop.infrastructure.database import connect
 
-_COLUMNS = (
-    "id, user_id, status, stripe_session_id, total_cents, currency, created_at,"
-    " position"
-)
 _INSERT_ORDER = (
     "INSERT INTO orders (user_id, status, stripe_session_id, total_cents, currency,"
     " created_at, position) VALUES (?, ?, ?, ?, ?, ?,"
@@ -26,16 +22,27 @@ _INSERT_LINE = (
     " VALUES (?, ?, ?, ?)"
 )
 _SELECT_POSITION = "SELECT position FROM orders WHERE id = ?"
-_SELECT_BY_SESSION = f"SELECT {_COLUMNS} FROM orders WHERE stripe_session_id = ?"
-_SELECT_BOARD = f"SELECT {_COLUMNS} FROM orders ORDER BY position, id"
+_SELECT_BY_SESSION = (
+    "SELECT id, user_id, status, stripe_session_id, total_cents, currency,"
+    " created_at, position FROM orders WHERE stripe_session_id = ?"
+)
+_SELECT_BOARD = (
+    "SELECT id, user_id, status, stripe_session_id, total_cents, currency,"
+    " created_at, position FROM orders ORDER BY position, id"
+)
 _SELECT_FOR_USER = (
-    f"SELECT {_COLUMNS} FROM orders WHERE user_id = ? ORDER BY created_at DESC, id DESC"
+    "SELECT id, user_id, status, stripe_session_id, total_cents, currency,"
+    " created_at, position FROM orders WHERE user_id = ?"
+    " ORDER BY created_at DESC, id DESC"
 )
-_SELECT_LINES = (
+_SELECT_ALL_LINES = (
     "SELECT order_id, product_name, unit_price_cents, quantity FROM order_lines"
+    " ORDER BY id"
 )
-_ORDER_LINES = " ORDER BY id"
-_FOR_ORDER = " WHERE order_id = ?"
+_SELECT_ORDER_LINES = (
+    "SELECT order_id, product_name, unit_price_cents, quantity FROM order_lines"
+    " WHERE order_id = ? ORDER BY id"
+)
 _SELECT_PLACES = "SELECT id, status FROM orders ORDER BY position, id"
 _UPDATE_PLACE = "UPDATE orders SET status = ?, position = ? WHERE id = ?"
 _DUPLICATE_COLUMN = "orders.stripe_session_id"
@@ -60,12 +67,11 @@ def _lines_by_order(
 ) -> dict[int, list[OrderLine]]:
     """The lines of every order, or of one, grouped by order id."""
     grouped: dict[int, list[OrderLine]] = defaultdict(list)
-    query = _SELECT_LINES + _ORDER_LINES
-    parameters: tuple[int, ...] = ()
-    if only_order is not None:
-        query = _SELECT_LINES + _FOR_ORDER + _ORDER_LINES
-        parameters = (only_order,)
-    for order_id, name, price, quantity in connection.execute(query, parameters):
+    if only_order is None:
+        found = connection.execute(_SELECT_ALL_LINES)
+    else:
+        found = connection.execute(_SELECT_ORDER_LINES, (only_order,))
+    for order_id, name, price, quantity in found:
         grouped[order_id].append(OrderLine(name, Money(price), quantity))
     return grouped
 

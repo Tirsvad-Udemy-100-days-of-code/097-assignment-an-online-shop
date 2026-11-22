@@ -8,10 +8,9 @@ from online_shop.domain.errors import DuplicateEmailError
 from online_shop.domain.user import User, UserRole
 from online_shop.infrastructure.database import connect
 
-_COLUMNS = "id, email, password_hash, role"
 _INSERT = "INSERT INTO users (email, password_hash, role) VALUES (?, ?, ?)"
-_SELECT_ONE = f"SELECT {_COLUMNS} FROM users WHERE id = ?"
-_SELECT_BY_EMAIL = f"SELECT {_COLUMNS} FROM users WHERE email = ?"
+_SELECT_ONE = "SELECT id, email, password_hash, role FROM users WHERE id = ?"
+_SELECT_BY_EMAIL = "SELECT id, email, password_hash, role FROM users WHERE email = ?"
 
 
 def _to_user(row: tuple[int, str, str, str]) -> User:
