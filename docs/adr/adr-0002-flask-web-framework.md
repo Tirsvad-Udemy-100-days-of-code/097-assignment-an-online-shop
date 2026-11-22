@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-22 | Proposed | Jens Tirsvad Nielsen | S01 | Initial version: Flask replaces the standard-library web layer | pending |
+| 2026-11-22 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version: Flask replaces the standard-library web layer; accepted after review RC-013, stand-in review, not independent | pending |
 
 Allowed Status values: `Proposed`, `Accepted`, `Rejected`, `Deprecated`, `Superseded by ADR-NNNN`.
 

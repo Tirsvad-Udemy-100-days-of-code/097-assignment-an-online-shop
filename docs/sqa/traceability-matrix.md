@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-11-22 | Proposed | Jens Tirsvad Nielsen | S01 | Initial version | [bfd7827] |
-| 2026-11-22 | Proposed | Jens Tirsvad Nielsen | S01 | Added ADR-0002 and the reviews RC-013 to RC-018 for the Flask change | pending |
+| 2026-11-22 | Proposed | Jens Tirsvad Nielsen | S01 | Added ADR-0002 and the reviews RC-013 to RC-018 for the Flask change | [4d90862] |
 
 ---
 
@@ -62,3 +62,4 @@ updated whenever an artifact instance is created or reviewed.
 
 [BC-001]: ../business-case.md
 [bfd7827]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/097-assignment-an-nnline-shop/commit/bfd782710394ff04fce3f51f464e5e342cbeb4ca
+[4d90862]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/097-assignment-an-online-shop/commit/4d908627163f1be713505164ac4973b394740c4f

@@ -12,7 +12,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-11-22 | Deprecated | Jens Tirsvad Nielsen | S01 | Accepted after review RC-006; stand-in review, not independent | [bfd7827] |
-| 2026-11-22 | Accepted | Jens Tirsvad Nielsen | S01 | Task 4 uses Flask and Jinja2 per ADR-0002; accepted after review RC-017, stand-in review, not independent | pending |
+| 2026-11-22 | Accepted | Jens Tirsvad Nielsen | S01 | Task 4 uses Flask and Jinja2 per ADR-0002; accepted after review RC-017, stand-in review, not independent | [4d90862] |
 
 ---
 
@@ -74,3 +74,4 @@ Product entity, SQLite repository, seeded catalog, product list and product deta
 
 [BC-001]: ../business-case.md
 [bfd7827]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/097-assignment-an-nnline-shop/commit/bfd782710394ff04fce3f51f464e5e342cbeb4ca
+[4d90862]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/097-assignment-an-online-shop/commit/4d908627163f1be713505164ac4973b394740c4f

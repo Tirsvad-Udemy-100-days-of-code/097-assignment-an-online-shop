@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-22 | Proposed | Jens Tirsvad Nielsen | S01 | Review of PP-001 after the move to Flask ([ADR-0002]) | pending |
+| 2026-11-22 | Proposed | Jens Tirsvad Nielsen | S01 | Review of PP-001 after the move to Flask ([ADR-0002]) | [4d90862] |
 
 ---
 
@@ -74,3 +74,4 @@ Go — no Mandatory criterion fails. Reviewer is the stand-in for S01, not indep
 [QC-PP-001]: ../../../framework/qc/artifacts/qc-project-plan.md
 [QC-LANG-001]: ../../../framework/qc/artifacts/qc-language-domain.md
 [ADR-0002]: ../../adr/adr-0002-flask-web-framework.md
+[4d90862]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/097-assignment-an-online-shop/commit/4d908627163f1be713505164ac4973b394740c4f

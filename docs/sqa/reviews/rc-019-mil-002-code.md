@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-22 | Proposed | Jens Tirsvad Nielsen | S01 | Code review of the MIL-002 deliverable on Flask ([ADR-0002]) | pending |
+| 2026-11-22 | Proposed | Jens Tirsvad Nielsen | S01 | Code review of the MIL-002 deliverable on Flask ([ADR-0002]) | [b5dc5b5] |
 
 ---
 
@@ -60,3 +60,4 @@ Go: no Mandatory criterion fails. Reviewer is the stand-in for S01, not independ
 [MIL-002]: ../../milestones/mil-002-catalog-storage.md
 [QC-PY-001]: ../../../framework/qc/code/qc-programming-python.md
 [ADR-0002]: ../../adr/adr-0002-flask-web-framework.md
+[b5dc5b5]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/097-assignment-an-online-shop/commit/b5dc5b570d69026ab3b7c8b65bdebd6d2da33533
