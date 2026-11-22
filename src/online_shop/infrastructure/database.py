@@ -31,6 +31,22 @@ _MIGRATIONS = (
     );
     PRAGMA user_version = 2;
     """,
+    f"""
+    CREATE TABLE baskets (
+        user_id INTEGER PRIMARY KEY REFERENCES users (id) ON DELETE CASCADE
+    );
+    CREATE TABLE basket_lines (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        user_id INTEGER NOT NULL REFERENCES baskets (user_id) ON DELETE CASCADE,
+        product_id INTEGER NOT NULL REFERENCES products (id) ON DELETE CASCADE,
+        quantity INTEGER NOT NULL CHECK (
+            quantity BETWEEN {constants.BASKET_MIN_QUANTITY}
+            AND {constants.BASKET_MAX_QUANTITY}
+        ),
+        UNIQUE (user_id, product_id)
+    );
+    PRAGMA user_version = 3;
+    """,
 )
 
 _COUNT_PRODUCTS = "SELECT COUNT(*) FROM products"
@@ -41,7 +57,10 @@ _INSERT_PRODUCT = (
 
 def connect(database_path: Path) -> sqlite3.Connection:
     """@brief Open a connection; the caller closes it."""
-    return sqlite3.connect(database_path)
+    connection = sqlite3.connect(database_path)
+    # SQLite ignores foreign keys unless each connection asks for them.
+    connection.execute("PRAGMA foreign_keys = ON")
+    return connection
 
 
 def migrate(database_path: Path) -> None:

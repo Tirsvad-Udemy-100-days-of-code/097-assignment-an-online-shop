@@ -57,3 +57,39 @@ class UserDto:
 def to_user_dto(user: User) -> UserDto:
     """@brief Map a user entity to its DTO, leaving the hash behind."""
     return UserDto(user.id, user.email, user.role.value)
+
+
+@dataclass(frozen=True, slots=True)
+class BasketLineDto:
+    """@brief A basket line with the product data read at view time.
+
+    @param product_id The key of the product.
+    @param name The product name.
+    @param image The file name of the product image.
+    @param unit_price_cents The price of one piece in cents.
+    @param quantity The pieces in the basket.
+    @param line_total_cents Unit price times quantity, in cents.
+    """
+
+    product_id: int
+    name: str
+    image: str
+    unit_price_cents: int
+    quantity: int
+    line_total_cents: int
+
+
+@dataclass(frozen=True, slots=True)
+class BasketDto:
+    """@brief A basket as the presentation layer sees it.
+
+    @param lines The lines whose product still exists.
+    @param total_cents The sum of the line totals in cents.
+    @param item_count The sum of the quantities of the listed lines.
+    @param unavailable_count The lines skipped because their product vanished.
+    """
+
+    lines: tuple[BasketLineDto, ...]
+    total_cents: int
+    item_count: int
+    unavailable_count: int

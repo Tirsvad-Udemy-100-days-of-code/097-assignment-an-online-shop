@@ -52,4 +52,4 @@ def test_data_survives_a_restart_without_duplicating_the_seed(database: Path) ->
 
 def test_migration_records_the_schema_version(database: Path) -> None:
     with closing(sqlite3.connect(database)) as connection:
-        assert connection.execute("PRAGMA user_version").fetchone()[0] == 2
+        assert connection.execute("PRAGMA user_version").fetchone()[0] == 3

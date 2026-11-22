@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "_add_to_basket.html" import add_to_basket with context %}
 {% block content %}
 <article class="product-detail">
 <img src="{{ url_for('static', filename=product.image) }}" alt="{{ product.name }}">
@@ -6,6 +7,7 @@
 <h1>{{ product.name }}</h1>
 <p class="product-description">{{ product.description }}</p>
 <p class="product-price">{{ product.price_cents | price }}</p>
+{{ add_to_basket(product.id, site) }}
 <p><a href="{{ url_for('home.show') }}">Back to the catalog</a></p>
 </div>
 </article>

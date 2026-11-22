@@ -21,7 +21,7 @@
 <a class="header-link" href="{{ url_for('auth.register') }}">{{ site.auth.register }}</a>
 {%- endif %}
 <span class="icon" role="img" aria-label="{{ site.label_search }}"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M16 16l5 5"/></svg></span>
-<span class="icon" role="img" aria-label="{{ site.label_basket }}"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 4h3l2 12h10l2-8H7"/><circle cx="9" cy="20" r="1.5"/><circle cx="17" cy="20" r="1.5"/></svg></span>
+<a class="icon basket-link" href="{{ url_for('basket.show') }}" aria-label="{{ site.label_basket }}"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 4h3l2 12h10l2-8H7"/><circle cx="9" cy="20" r="1.5"/><circle cx="17" cy="20" r="1.5"/></svg>{% if current_user and basket_count %}<span class="basket-badge">{{ basket_count }}</span>{% endif %}</a>
 </div></div>
 <input type="checkbox" id="nav-toggle" class="nav-toggle">
 <nav class="site-nav"><ul>

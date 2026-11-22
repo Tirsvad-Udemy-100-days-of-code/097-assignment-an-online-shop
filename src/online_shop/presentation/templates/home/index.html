@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% from "_product_grid.html" import product_grid %}
+{% from "_product_grid.html" import product_grid with context %}
 {% block content %}
 <section class="hero">
 <img class="hero-art" src="{{ url_for('static', filename=site.hero_image) }}" alt="{{ site.hero_image_alt }}">

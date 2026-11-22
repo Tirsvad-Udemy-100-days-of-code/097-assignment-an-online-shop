@@ -27,3 +27,11 @@ class InvalidPasswordError(DomainError):
 
 class DuplicateEmailError(DomainError):
     """@brief An account with this email already exists."""
+
+
+class InvalidQuantityError(DomainError):
+    """@brief A basket quantity is not a whole number inside the limits."""
+
+
+class InvalidBasketError(DomainError):
+    """@brief A basket or a basket line breaks one of its rules."""

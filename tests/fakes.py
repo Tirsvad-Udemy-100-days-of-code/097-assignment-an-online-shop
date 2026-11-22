@@ -1,5 +1,6 @@
 """Fakes of the user ports, shared by the unit tests."""
 
+from online_shop.domain.basket import Basket
 from online_shop.domain.errors import DuplicateEmailError
 from online_shop.domain.user import User, UserRole
 
@@ -30,3 +31,14 @@ class FakeUserRepository:
 
     def get_by_email(self, email: str) -> User | None:
         return next((u for u in self._users if u.email.lower() == email.lower()), None)
+
+
+class FakeBasketRepository:
+    def __init__(self) -> None:
+        self._baskets: dict[int, Basket] = {}
+
+    def get(self, user_id: int) -> Basket:
+        return self._baskets.get(user_id, Basket(user_id))
+
+    def save(self, basket: Basket) -> None:
+        self._baskets[basket.user_id] = basket
