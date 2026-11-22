@@ -1,4 +1,4 @@
-"""Tests of migration 4 and the SQLite order repository."""
+"""Tests of migrations 4 and 5 and the SQLite order repository."""
 
 import sqlite3
 from contextlib import closing
@@ -67,8 +67,8 @@ def test_status_outside_the_enum_is_refused(database: Path) -> None:
         )
 
 
-def test_migration_four_keeps_earlier_data(database: Path) -> None:
+def test_migration_keeps_earlier_data(database: Path) -> None:
     migrate(database)
     with closing(connect(database)) as connection:
-        assert connection.execute("PRAGMA user_version").fetchone()[0] == 4
+        assert connection.execute("PRAGMA user_version").fetchone()[0] == 5
         assert connection.execute("SELECT COUNT(*) FROM users").fetchone()[0] == 1

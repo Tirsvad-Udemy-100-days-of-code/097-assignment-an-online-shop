@@ -1,6 +1,7 @@
 """@brief The plain data the use cases hand to the presentation layer."""
 
 from dataclasses import dataclass
+from datetime import datetime
 
 from online_shop.domain.order import Order
 from online_shop.domain.product import Product
@@ -114,6 +115,7 @@ class OrderDto:
     @param total_cents The amount paid in cents.
     @param currency The lower case ISO currency code.
     @param lines The lines as bought.
+    @param created_at When the order was made; timezone aware.
     """
 
     id: int
@@ -121,6 +123,7 @@ class OrderDto:
     total_cents: int
     currency: str
     lines: tuple[OrderLineDto, ...]
+    created_at: datetime
 
 
 def to_order_dto(order: Order) -> OrderDto:
@@ -134,4 +137,38 @@ def to_order_dto(order: Order) -> OrderDto:
             OrderLineDto(line.product_name, line.unit_price.cents, line.quantity)
             for line in order.lines
         ),
+        order.created_at,
     )
+
+
+@dataclass(frozen=True, slots=True)
+class BoardCardDto:
+    """@brief An order card of the board.
+
+    @param order_id The order number.
+    @param customer_email The email of the customer, or a label when removed.
+    @param items One text per line, for example "2 x Mug".
+    @param total_cents The amount paid in cents.
+    @param created_at When the order was made.
+    """
+
+    order_id: int
+    customer_email: str
+    items: tuple[str, ...]
+    total_cents: int
+    created_at: datetime
+
+
+@dataclass(frozen=True, slots=True)
+class BoardColumnDto:
+    """@brief One board column: a status and its cards in position order."""
+
+    status: str
+    cards: tuple[BoardCardDto, ...]
+
+
+@dataclass(frozen=True, slots=True)
+class BoardDto:
+    """@brief The whole board: one column per status, in the order of the flow."""
+
+    columns: tuple[BoardColumnDto, ...]

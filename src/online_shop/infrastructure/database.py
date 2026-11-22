@@ -68,6 +68,16 @@ _MIGRATIONS = (
     );
     PRAGMA user_version = 4;
     """,
+    """
+    ALTER TABLE orders ADD COLUMN position INTEGER NOT NULL DEFAULT 0
+        CHECK (position >= 0);
+    UPDATE orders SET position = (
+        SELECT COUNT(*) FROM orders AS earlier
+        WHERE earlier.status = orders.status AND earlier.id < orders.id
+    );
+    CREATE INDEX orders_board ON orders (status, position);
+    PRAGMA user_version = 5;
+    """,
 )
 
 _COUNT_PRODUCTS = "SELECT COUNT(*) FROM products"

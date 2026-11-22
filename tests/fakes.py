@@ -1,5 +1,6 @@
 """Fakes of the user ports, shared by the unit tests."""
 
+from dataclasses import replace
 from datetime import datetime
 
 from online_shop.application.errors import PaymentGatewayError
@@ -9,6 +10,7 @@ from online_shop.application.payment_gateway import (
     SessionResult,
 )
 from online_shop.domain.basket import Basket
+from online_shop.domain.board_placement import place_order
 from online_shop.domain.errors import DuplicateEmailError, DuplicateOrderError
 from online_shop.domain.money import Money
 from online_shop.domain.order import Order, OrderLine, OrderStatus
@@ -78,6 +80,7 @@ class FakeOrderRepository:
             currency,
             created_at,
             lines,
+            sum(1 for o in self.orders if o.status is OrderStatus.NEEDS_CONFIRMATION),
         )
         self.orders.append(order)
         return order
@@ -86,6 +89,27 @@ class FakeOrderRepository:
         return next(
             (o for o in self.orders if o.stripe_session_id == stripe_session_id), None
         )
+
+    def list_board(self) -> list[Order]:
+        return sorted(self.orders, key=lambda o: (o.position, o.id))
+
+    def list_for_user(self, user_id: int) -> list[Order]:
+        mine = [o for o in self.orders if o.user_id == user_id]
+        return sorted(mine, key=lambda o: (o.created_at, o.id), reverse=True)
+
+    def move(self, order_id: int, status: OrderStatus, index: int) -> bool:
+        if all(o.id != order_id for o in self.orders):
+            return False
+        columns = {
+            s: [o.id for o in self.list_board() if o.status is s] for s in OrderStatus
+        }
+        placed = place_order(columns, order_id, status, index)
+        where = {i: (s, p) for s, ids in placed.items() for p, i in enumerate(ids)}
+        self.orders = [
+            replace(o, status=where[o.id][0], position=where[o.id][1])
+            for o in self.orders
+        ]
+        return True
 
 
 class FakePaymentGateway:

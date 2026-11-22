@@ -12,6 +12,7 @@
 <li class="order-line"><span>{{ line.quantity }} &times; {{ line.product_name }}</span><span>{{ (line.unit_price_cents * line.quantity) | price }}</span></li>
 {% endfor -%}
 </ul>
+<p><a class="orders-link" href="{{ url_for('orders.index') }}">{{ texts.orders }}</a></p>
 <p><a href="{{ url_for('home.show') }}#shop">{{ texts.continue }}</a></p>
 </section>
 {% endblock %}

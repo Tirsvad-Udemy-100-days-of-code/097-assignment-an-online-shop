@@ -6,6 +6,7 @@
 - [Step 3: Registration and login](Step-03-Registration-and-Login)
 - [Step 4: Shopping basket](Step-04-Shopping-Basket)
 - [Step 5: Stripe checkout](Step-05-Stripe-Checkout)
+- [Step 6: Order Kanban board](Step-06-Order-Kanban-Board)
 
 **Languages**
 

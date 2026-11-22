@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="basket-panel orders-panel">
+<h1>{{ texts.heading }}</h1>
+{% if orders %}
+<ul class="order-list">
+{% for order in orders -%}
+<li class="order-card">
+<div class="order-card-head">
+<span class="order-card-number">{{ texts.number }} <strong class="order-number">{{ order.id }}</strong></span>
+<span class="status-badge status-{{ order.status | status_slug }}">{{ order.status }}</span>
+</div>
+<p class="order-date">{{ texts.date }}: <time datetime="{{ order.created_at.isoformat() }}">{{ order.created_at | date }}</time></p>
+<ul class="basket-lines order-lines">
+{% for line in order.lines -%}
+<li class="order-line"><span>{{ line.quantity }} &times; {{ line.product_name }}</span><span>{{ (line.unit_price_cents * line.quantity) | price }}</span></li>
+{% endfor -%}
+</ul>
+<p class="order-card-total">{{ texts.total }} <strong class="order-total">{{ order.total_cents | price }}</strong></p>
+</li>
+{% endfor -%}
+</ul>
+{% else %}
+<p class="basket-empty">{{ texts.empty }}</p>
+{% endif %}
+<p><a href="{{ url_for('home.show') }}#shop">{{ texts.continue }}</a></p>
+</section>
+{% endblock %}

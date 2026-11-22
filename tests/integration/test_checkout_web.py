@@ -180,12 +180,27 @@ def test_paid_session_creates_an_order_and_empties_the_basket(
     assert "Needs confirmation" in html
     assert "25.00" in html
     assert "Notebook" in html
+    assert 'href="/orders"' in html
     assert constants.TEXT_BASKET_EMPTY in shop.text("/basket")
     assert "basket-badge" not in shop.text("/basket")
     # reloading the page does not create a second order
     again = shop.client.get(f"/checkout/success?session_id={session_id}")
     assert again.status_code == 200
     assert 'class="order-number">1<' in again.get_data(as_text=True)
+
+
+def test_paid_order_is_listed_in_the_order_history(
+    shop: Shop, payments: FakePaymentGateway
+) -> None:
+    shop.add(1, 2)
+    session_id = shop.begin()
+    payments.pay(session_id)
+    shop.client.get(f"/checkout/success?session_id={session_id}")
+    html = shop.text("/orders")
+    assert 'class="order-number">1<' in html
+    assert "status-needs-confirmation" in html
+    assert "2 &times; Notebook" in html
+    assert "25.00" in html
 
 
 def test_unpaid_session_is_a_400_and_keeps_the_basket(shop: Shop) -> None:

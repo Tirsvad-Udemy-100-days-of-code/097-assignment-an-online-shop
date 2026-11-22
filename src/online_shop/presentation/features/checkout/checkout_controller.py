@@ -99,6 +99,7 @@ class CheckoutController:
                 "status": constants.TEXT_CHECKOUT_STATUS,
                 "total": constants.TEXT_CHECKOUT_TOTAL,
                 "continue": constants.TEXT_BASKET_CONTINUE,
+                "orders": constants.TEXT_ORDERS_VIEW,
             },
         )
 

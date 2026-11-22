@@ -11,3 +11,4 @@ Kedai dalam talian yang dibina dengan Flask, SQLite, Stripe Checkout dan JavaScr
 | 3 | [Pendaftaran dan log masuk](Step-03-Registration-and-Login-ms) |
 | 4 | [Bakul beli-belah](Step-04-Shopping-Basket-ms) |
 | 5 | [Pembayaran Stripe](Step-05-Stripe-Checkout-ms) |
+| 6 | [Papan Kanban pesanan](Step-06-Order-Kanban-Board-ms) |

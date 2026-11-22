@@ -23,3 +23,11 @@ class PaymentNotCompletedError(Exception):
 
 class ForeignPaymentError(Exception):
     """@brief The payment session belongs to another user."""
+
+
+class OrderNotFoundError(LookupError):
+    """@brief No order has the requested id."""
+
+
+class InvalidMoveError(ValueError):
+    """@brief A board move names an unknown status or a bad index."""
