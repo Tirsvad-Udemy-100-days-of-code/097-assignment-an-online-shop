@@ -11,16 +11,21 @@ from werkzeug.exceptions import HTTPException
 from online_shop import constants
 from online_shop.application.add_to_basket import AddToBasket
 from online_shop.application.authenticate_user import AuthenticateUser
+from online_shop.application.cancel_checkout import CancelCheckout
+from online_shop.application.complete_checkout import CompleteCheckout
 from online_shop.application.count_basket_items import CountBasketItems
 from online_shop.application.ensure_admin import EnsureAdmin
 from online_shop.application.get_product import GetProduct
 from online_shop.application.get_user import GetUser
 from online_shop.application.list_products import ListProducts
+from online_shop.application.payment_gateway import PaymentGateway
 from online_shop.application.register_user import RegisterUser
 from online_shop.application.remove_from_basket import RemoveFromBasket
+from online_shop.application.start_checkout import StartCheckout
 from online_shop.application.update_basket_line import UpdateBasketLine
 from online_shop.application.view_basket import ViewBasket
 from online_shop.domain.basket_repository import BasketRepository
+from online_shop.domain.order_repository import OrderRepository
 from online_shop.domain.password_hasher import PasswordHasher
 from online_shop.domain.product_repository import ProductRepository
 from online_shop.domain.user_repository import UserRepository
@@ -30,10 +35,13 @@ from online_shop.infrastructure.settings import Settings
 from online_shop.infrastructure.sqlite_basket_repository import (
     SqliteBasketRepository,
 )
+from online_shop.infrastructure.sqlite_order_repository import SqliteOrderRepository
 from online_shop.infrastructure.sqlite_product_repository import (
     SqliteProductRepository,
 )
 from online_shop.infrastructure.sqlite_user_repository import SqliteUserRepository
+from online_shop.infrastructure.stripe_gateway import StripeGateway
+from online_shop.infrastructure.stripe_settings import load_stripe_settings
 from online_shop.presentation.features.admin.admin_controller import (
     create_admin_blueprint,
 )
@@ -45,6 +53,9 @@ from online_shop.presentation.features.basket.basket_controller import (
 )
 from online_shop.presentation.features.catalog.catalog_controller import (
     create_catalog_blueprint,
+)
+from online_shop.presentation.features.checkout.checkout_controller import (
+    create_checkout_blueprint,
 )
 from online_shop.presentation.features.home.home_controller import (
     create_home_blueprint,
@@ -73,6 +84,7 @@ _BASKET_TEXTS = {
     "quantity": constants.TEXT_BASKET_QUANTITY,
     "empty": constants.TEXT_BASKET_EMPTY,
     "continue": constants.TEXT_BASKET_CONTINUE,
+    "checkout": constants.TEXT_CHECKOUT,
     "unavailable": constants.TEXT_BASKET_UNAVAILABLE,
     "max_quantity": constants.BASKET_MAX_QUANTITY,
 }
@@ -132,6 +144,8 @@ def create_app_for(
     baskets: BasketRepository,
     hasher: PasswordHasher,
     secret_key: str,
+    orders: OrderRepository,
+    payments: PaymentGateway | None = None,
 ) -> Flask:
     """@brief Wire the use cases, blueprints and templates around the ports.
 
@@ -140,6 +154,8 @@ def create_app_for(
     @param baskets The port that stores baskets.
     @param hasher The port that hashes passwords.
     @param secret_key The key that signs the session cookie.
+    @param orders The port that stores orders.
+    @param payments The payment gateway; None means checkout is not available.
     @return The Flask application.
     """
     app = Flask(__name__)
@@ -152,6 +168,7 @@ def create_app_for(
     app.context_processor(
         BasketCount(CountBasketItems(baskets), sessions).template_context
     )
+    app.context_processor(lambda: {"checkout_available": payments is not None})
     app.add_template_filter(format_price, "price")
     app.register_blueprint(create_home_blueprint(ListProducts(products)))
     app.register_blueprint(create_catalog_blueprint(GetProduct(products)))
@@ -170,18 +187,46 @@ def create_app_for(
             RemoveFromBasket(baskets),
         )
     )
+    app.register_blueprint(
+        create_checkout_blueprint(
+            current_user,
+            None if payments is None else StartCheckout(baskets, products, payments),
+            None
+            if payments is None
+            else CompleteCheckout(baskets, products, orders, payments),
+            CancelCheckout(baskets),
+        )
+    )
     app.register_error_handler(HTTPException, _handle_http_error)
     return app
 
 
-def create_app(database_path: Path, settings: Settings | None = None) -> Flask:
+def _stripe_gateway(settings: Settings) -> PaymentGateway | None:
+    """The Stripe gateway from the key file or the environment, else None."""
+    stripe = load_stripe_settings(
+        settings.stripe_env_file,
+        settings.stripe_publishable_key,
+        settings.stripe_secret_key,
+    )
+    if stripe is None:
+        _LOG.warning("Stripe is not configured; checkout is not available.")
+        return None
+    return StripeGateway(stripe.secret_key)
+
+
+def create_app(
+    database_path: Path,
+    settings: Settings | None = None,
+    payments: PaymentGateway | None = None,
+) -> Flask:
     """@brief Prepare the database and build the shop on top of it.
 
     This is the composition root: the only place that builds the adapters.
 
     @param database_path The SQLite file; it is migrated and seeded here.
     @param settings Secret key and optional admin account; defaults to none,
-        which gives a random secret key and no admin.
+        which gives a random secret key, no admin and no Stripe key file.
+    @param payments A gateway to use instead of Stripe (tests, screenshots).
     @return The Flask application.
     """
     settings = settings or Settings()
@@ -206,4 +251,6 @@ def create_app(database_path: Path, settings: Settings | None = None) -> Flask:
         SqliteBasketRepository(database_path),
         hasher,
         secret_key,
+        SqliteOrderRepository(database_path),
+        payments or _stripe_gateway(settings),
     )

@@ -5,9 +5,11 @@ from contextlib import closing
 from pathlib import Path
 
 from online_shop import constants
+from online_shop.domain.order import OrderStatus
 from online_shop.domain.user import UserRole
 
 _ROLE_VALUES = ", ".join(f"'{role.value}'" for role in UserRole)
+_STATUS_VALUES = ", ".join(f"'{status.value}'" for status in OrderStatus)
 
 ## Each script upgrades the schema by one version and records it; a script that
 ## is already applied is skipped, so the data survives a restart.
@@ -46,6 +48,25 @@ _MIGRATIONS = (
         UNIQUE (user_id, product_id)
     );
     PRAGMA user_version = 3;
+    """,
+    f"""
+    CREATE TABLE orders (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        user_id INTEGER NOT NULL REFERENCES users (id),
+        status TEXT NOT NULL CHECK (status IN ({_STATUS_VALUES})),
+        stripe_session_id TEXT NOT NULL UNIQUE,
+        total_cents INTEGER NOT NULL CHECK (total_cents >= 0),
+        currency TEXT NOT NULL,
+        created_at TEXT NOT NULL
+    );
+    CREATE TABLE order_lines (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        order_id INTEGER NOT NULL REFERENCES orders (id) ON DELETE CASCADE,
+        product_name TEXT NOT NULL,
+        unit_price_cents INTEGER NOT NULL CHECK (unit_price_cents >= 0),
+        quantity INTEGER NOT NULL CHECK (quantity >= 1)
+    );
+    PRAGMA user_version = 4;
     """,
 )
 

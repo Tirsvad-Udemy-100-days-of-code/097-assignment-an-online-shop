@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="basket-panel checkout-panel">
+<h1>{{ texts.heading }}</h1>
+<dl class="order-summary">
+<dt>{{ texts.number }}</dt><dd class="order-number">{{ order.id }}</dd>
+<dt>{{ texts.status }}</dt><dd class="order-status">{{ order.status }}</dd>
+<dt>{{ texts.total }}</dt><dd class="order-total">{{ order.total_cents | price }}</dd>
+</dl>
+<ul class="basket-lines order-lines">
+{% for line in order.lines -%}
+<li class="order-line"><span>{{ line.quantity }} &times; {{ line.product_name }}</span><span>{{ (line.unit_price_cents * line.quantity) | price }}</span></li>
+{% endfor -%}
+</ul>
+<p><a href="{{ url_for('home.show') }}#shop">{{ texts.continue }}</a></p>
+</section>
+{% endblock %}

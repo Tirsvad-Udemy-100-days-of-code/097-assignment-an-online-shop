@@ -6,7 +6,12 @@ from pathlib import Path
 import pytest
 from flask.testing import FlaskClient
 
-from fakes import FakeBasketRepository, FakePasswordHasher, FakeUserRepository
+from fakes import (
+    FakeBasketRepository,
+    FakeOrderRepository,
+    FakePasswordHasher,
+    FakeUserRepository,
+)
 from online_shop import constants
 from online_shop.domain.money import Money
 from online_shop.domain.product import Product
@@ -35,6 +40,7 @@ def build_client(products: list[Product]) -> FlaskClient:
         FakeBasketRepository(),
         FakePasswordHasher(),
         "test-secret",
+        FakeOrderRepository(),
     )
     return app.test_client()
 

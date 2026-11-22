@@ -121,3 +121,9 @@ main { margin: 0 auto; padding: 0 0 3rem; }
   .header-icons { flex-wrap: nowrap; }
 }
 @media (max-width: 480px) { .tagline { display: none; } .header-icons { gap: 0.5rem; } }
+.checkout-form { margin: 1rem 0; }
+.checkout-button { cursor: pointer; padding: 0.7rem 1.6rem; }
+.order-summary { display: grid; grid-template-columns: auto 1fr; gap: 0.5rem 1.5rem; margin: 1rem 0; }
+.order-summary dt { color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+.order-summary dd { margin: 0; font-weight: 700; }
+.order-line { display: flex; justify-content: space-between; padding: 0.6rem 0; border-top: 1px solid var(--line); }

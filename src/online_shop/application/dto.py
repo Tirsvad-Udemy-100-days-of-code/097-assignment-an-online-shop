@@ -2,6 +2,7 @@
 
 from dataclasses import dataclass
 
+from online_shop.domain.order import Order
 from online_shop.domain.product import Product
 from online_shop.domain.user import User, UserRole
 
@@ -93,3 +94,44 @@ class BasketDto:
     total_cents: int
     item_count: int
     unavailable_count: int
+
+
+@dataclass(frozen=True, slots=True)
+class OrderLineDto:
+    """@brief An order line as bought: name, price of one piece in cents, pieces."""
+
+    product_name: str
+    unit_price_cents: int
+    quantity: int
+
+
+@dataclass(frozen=True, slots=True)
+class OrderDto:
+    """@brief An order as the presentation layer sees it.
+
+    @param id The order number.
+    @param status The status as text.
+    @param total_cents The amount paid in cents.
+    @param currency The lower case ISO currency code.
+    @param lines The lines as bought.
+    """
+
+    id: int
+    status: str
+    total_cents: int
+    currency: str
+    lines: tuple[OrderLineDto, ...]
+
+
+def to_order_dto(order: Order) -> OrderDto:
+    """@brief Map an order entity to its DTO."""
+    return OrderDto(
+        order.id,
+        order.status.value,
+        order.total.cents,
+        order.currency,
+        tuple(
+            OrderLineDto(line.product_name, line.unit_price.cents, line.quantity)
+            for line in order.lines
+        ),
+    )
