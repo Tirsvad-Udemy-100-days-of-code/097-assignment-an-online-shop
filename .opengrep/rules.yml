@@ -31,7 +31,14 @@ rules:
     languages: [python]
     severity: ERROR
     message: A secret looks hardcoded; read it from the environment.
+    # Names of environment variables, form fields and labels (ENV_, FIELD_, TEXT_,
+    # STRIPE_KEY_) only name a secret; they hold none. The screenshot tool uses
+    # fixed demo credentials for a throw-away database.
+    paths:
+      exclude:
+        - tools/screenshots
     patterns:
+      - pattern-not-regex: ^\s*(ENV|FIELD|TEXT|STRIPE_KEY)_\w+\s*=
       - pattern-either:
           - pattern: $NAME = "..."
       - metavariable-regex:

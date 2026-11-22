@@ -126,7 +126,27 @@ docker run --rm -v "${PWD}:/work" -w /work --entrypoint python online-shop-shots
 
 ## 💭 Reflection
 
-The reflection is written when the last step is done.
+- **Approach:** plan first. Business case, stakeholders, plan and seven
+  milestones were written and reviewed before any code, and each milestone
+  went through one pull request with its review record. The layers
+  (domain, application, infrastructure, presentation) kept the shop rules free
+  of Flask, SQLite and Stripe, so most of the 340 tests run without a browser.
+- **Easy:** the domain rules (money in cents, basket, order statuses) and the
+  SQLite repositories. Once the ports existed, fakes made them quick to test.
+- **Hard:** the order Kanban board with drag and drop that keeps positions in
+  the database, and Stripe checkout, which has to be tested without real keys
+  or real payments. CI also caught what my local checks missed: a fake
+  `sk_live_` key in a test tripped the secret scan, and raw SQL built from
+  f-strings tripped the code scan.
+- **Biggest learning:** a decision that changes mid-project (the switch from
+  the standard library to Flask) is cheapest when it is written down first, in
+  an ADR and the plan, and only then coded. Also: a bug like `site.update`
+  rendering a dict method in a template is found by looking at a real
+  screenshot, not by the unit tests.
+- **Differently next time:** run the same scans CI runs before every push, and
+  settle the framework choice before the first milestone.
+
+The longer version is in the wiki, step 6.
 
 ## 📄 License
 
