@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-22 | Proposed | Jens Tirsvad Nielsen | S01 | Code review of the MIL-001 deliverable | [pending] |
+| 2026-11-22 | Proposed | Jens Tirsvad Nielsen | S01 | Code review of the MIL-001 deliverable | pending |
 
 ---
 
