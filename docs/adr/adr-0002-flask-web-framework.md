@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-22 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version: Flask replaces the standard-library web layer; accepted after review RC-013, stand-in review, not independent | pending |
+| 2026-11-22 | Accepted | Jens Tirsvad Nielsen | S01 | Initial version: Flask replaces the standard-library web layer; accepted after review RC-013, stand-in review, not independent | [b7ac9e2] |
 
 Allowed Status values: `Proposed`, `Accepted`, `Rejected`, `Deprecated`, `Superseded by ADR-NNNN`.
 
@@ -77,3 +77,4 @@ persistence, hashing and payment adapters stands.
 [BC-001]: ../business-case.md
 [SA-001]: ../stakeholder-analysis.md
 [ADR-0001]: ./adr-0001-standard-library-stack.md
+[b7ac9e2]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/097-assignment-an-online-shop/commit/b7ac9e297b2d6ed6467edb6a37f326f6cc98aaea
