@@ -1,0 +1,36 @@
+# Byte-compiled and cache files
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Packaging and build output
+build/
+dist/
+*.egg-info/
+.eggs/
+docs/doxygen/
+
+# Secrets and local settings (never commit)
+.env
+.env.*
+!.env.example
+stripe.env
+*.pem
+
+# Local data
+*.sqlite3
+*.db
+
+# Session prompt log (kept local)
+docs/ai-prompts/
