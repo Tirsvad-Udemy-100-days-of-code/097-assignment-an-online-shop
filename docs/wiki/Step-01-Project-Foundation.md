@@ -4,7 +4,7 @@
 
 The first step builds nothing the shopper can use yet. It sets up the tooling and the structure that every later step stands on, and serves one page.
 
-![Step 1](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/097-assignment-an-nnline-shop/raw/branch/main/docs/screenshots/step-01.png)
+![Step 1](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/097-assignment-an-online-shop/raw/branch/main/docs/screenshots/step-01.png)
 
 ## Setup
 

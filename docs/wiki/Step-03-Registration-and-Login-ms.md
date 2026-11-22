@@ -4,7 +4,7 @@
 
 Pelawat kini boleh mendaftar, log masuk dan log keluar, dan kedai mempunyai peranan admin.
 
-![Langkah 3](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/097-assignment-an-nnline-shop/raw/branch/main/docs/screenshots/step-03.png)
+![Langkah 3](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/097-assignment-an-online-shop/raw/branch/main/docs/screenshots/step-03.png)
 
 ## Cincang kata laluan
 

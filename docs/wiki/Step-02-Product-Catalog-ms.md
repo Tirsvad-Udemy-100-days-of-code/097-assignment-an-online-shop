@@ -4,7 +4,7 @@
 
 Kedai kini menyimpan produk dalam SQLite dan memaparkannya: grid di halaman utama dan halaman butiran untuk setiap produk.
 
-![Langkah 2](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/097-assignment-an-nnline-shop/raw/branch/main/docs/screenshots/step-02.png)
+![Langkah 2](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/097-assignment-an-online-shop/raw/branch/main/docs/screenshots/step-02.png)
 
 ## Lapisan
 

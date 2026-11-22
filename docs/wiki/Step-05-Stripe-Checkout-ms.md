@@ -4,7 +4,7 @@
 
 Pembeli membayar melalui Stripe Checkout dalam mod ujian, dan hanya sesi yang dibayar mencipta pesanan.
 
-![Langkah 5](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/097-assignment-an-nnline-shop/raw/branch/main/docs/screenshots/step-05.png)
+![Langkah 5](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/097-assignment-an-online-shop/raw/branch/main/docs/screenshots/step-05.png)
 
 ## Aliran
 

@@ -4,7 +4,7 @@
 
 The shop owner follows every paid order on a Kanban board, and each customer sees the status of their own orders.
 
-![Step 6](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/097-assignment-an-nnline-shop/raw/branch/main/docs/screenshots/step-06.png)
+![Step 6](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/097-assignment-an-online-shop/raw/branch/main/docs/screenshots/step-06.png)
 
 ## Status flow
 

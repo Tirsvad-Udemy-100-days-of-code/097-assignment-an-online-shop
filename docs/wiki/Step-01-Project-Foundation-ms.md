@@ -4,7 +4,7 @@
 
 Langkah pertama belum membina apa-apa yang boleh digunakan oleh pembeli. Ia menyediakan peralatan dan struktur yang menjadi asas semua langkah seterusnya, dan menyajikan satu halaman.
 
-![Langkah 1](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/097-assignment-an-nnline-shop/raw/branch/main/docs/screenshots/step-01.png)
+![Langkah 1](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/097-assignment-an-online-shop/raw/branch/main/docs/screenshots/step-01.png)
 
 ## Persediaan
 

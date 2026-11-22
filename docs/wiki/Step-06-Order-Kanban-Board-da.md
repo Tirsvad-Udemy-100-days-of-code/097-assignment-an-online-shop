@@ -4,7 +4,7 @@
 
 Butiksejeren følger hver betalt ordre på en Kanban-tavle, og hver kunde ser status på sine egne ordrer.
 
-![Trin 6](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/097-assignment-an-nnline-shop/raw/branch/main/docs/screenshots/step-06.png)
+![Trin 6](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/097-assignment-an-online-shop/raw/branch/main/docs/screenshots/step-06.png)
 
 ## Statusforløb
 

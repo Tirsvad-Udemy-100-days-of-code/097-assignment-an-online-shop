@@ -4,7 +4,7 @@
 
 En kunde, der er logget ind, kan nu samle produkter i en kurv, ændre antal, fjerne linjer og se totalen.
 
-![Trin 4](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/097-assignment-an-nnline-shop/raw/branch/main/docs/screenshots/step-04.png)
+![Trin 4](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/097-assignment-an-online-shop/raw/branch/main/docs/screenshots/step-04.png)
 
 ## Modellen
 

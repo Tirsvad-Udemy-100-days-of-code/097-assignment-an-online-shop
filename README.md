@@ -126,27 +126,42 @@ docker run --rm -v "${PWD}:/work" -w /work --entrypoint python online-shop-shots
 
 ## 💭 Reflection
 
-- **Approach:** plan first. Business case, stakeholders, plan and seven
-  milestones were written and reviewed before any code, and each milestone
-  went through one pull request with its review record. The layers
-  (domain, application, infrastructure, presentation) kept the shop rules free
-  of Flask, SQLite and Stripe, so most of the 340 tests run without a browser.
-- **Easy:** the domain rules (money in cents, basket, order statuses) and the
-  SQLite repositories. Once the ports existed, fakes made them quick to test.
-- **Hard:** the order Kanban board with drag and drop that keeps positions in
-  the database, and Stripe checkout, which has to be tested without real keys
-  or real payments. CI also caught what my local checks missed: a fake
-  `sk_live_` key in a test tripped the secret scan, and raw SQL built from
-  f-strings tripped the code scan.
-- **Biggest learning:** a decision that changes mid-project (the switch from
-  the standard library to Flask) is cheapest when it is written down first, in
-  an ADR and the plan, and only then coded. Also: a bug like `site.update`
-  rendering a dict method in a template is found by looking at a real
-  screenshot, not by the unit tests.
-- **Differently next time:** run the same scans CI runs before every push, and
-  settle the framework choice before the first milestone.
+**How I approached the project.** I planned first. The business case, the
+stakeholders, the plan and seven milestones were written and reviewed before
+any code, and each milestone went through one pull request with its review
+record. The code is in four layers (domain, application, infrastructure,
+presentation), so the shop rules do not depend on Flask, SQLite or Stripe and
+most of the 340 tests run without a browser. I chose a Kanban board for the
+orders because an order moves through a few clear steps (needs confirmation,
+confirmed, being packed, shipped, delivered), and a board shows the whole queue
+at a glance, so the owner sees what to do next and moves an order with a drag.
 
-The longer version is in the wiki, step 6.
+**What was easy.** The domain rules (money in cents, the basket, the order
+statuses) and the SQLite repositories. Once the ports existed, fakes made them
+quick to test.
+
+**What was hard.** The order board with drag and drop that keeps positions in
+the database, and Stripe checkout, which has to be tested without real keys or
+real payments. CI also caught what my local checks missed: a fake `sk_live_`
+key in a test tripped the secret scan, and SQL built from f-strings tripped the
+code scan. SQL injection is the risk to watch: every query is now a plain
+literal with `?` placeholders, and user input only travels as a bound value.
+
+**How I might improve for the next project.** Run the same scans CI runs
+before every push, look at a real screenshot as soon as a page exists, and keep
+the plan and the code in step as I go.
+
+**My biggest learning.** A decision that changes in the middle of a project
+(the switch from the standard library to Flask) is cheapest when it is written
+down first, in an ADR and the plan, and only then coded. A bug like
+`site.update` rendering a dict method in a template is found by looking at a
+real screenshot, not by the unit tests.
+
+**What I would do differently.** Settle the framework before the first
+milestone, and write the SQL as plain literals with placeholders from the first
+repository.
+
+The longer version is in the wiki, step 7.
 
 ## 📄 License
 
@@ -173,9 +188,9 @@ GNU Affero General Public License v3.0, see [LICENSE](./LICENSE).
 
 ---
 
-[repository]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/097-assignment-an-nnline-shop
-[documentation]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/097-assignment-an-nnline-shop/wiki
-[issues]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/097-assignment-an-nnline-shop/issues
+[repository]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/097-assignment-an-online-shop
+[documentation]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/097-assignment-an-online-shop/wiki
+[issues]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/097-assignment-an-online-shop/issues
 [BC-001]: ./docs/business-case.md
 [SA-001]: ./docs/stakeholder-analysis.md
 [PP-001]: ./docs/project-plan.md
