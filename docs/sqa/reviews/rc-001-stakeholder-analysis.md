@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-22 | Proposed | Jens Tirsvad Nielsen | S01 | Review of SA-001 | pending |
+| 2026-11-22 | Proposed | Jens Tirsvad Nielsen | S01 | Review of SA-001 | [bfd7827] |
 
 ---
 
@@ -66,3 +66,4 @@ Go — no Mandatory criterion fails. Reviewer is the stand-in for S01, not indep
 [SA-001]: ../../stakeholder-analysis.md
 [QC-SA-001]: ../../../framework/qc/artifacts/qc-stakeholder-analysis.md
 [QC-LANG-001]: ../../../framework/qc/artifacts/qc-language-domain.md
+[bfd7827]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/097-assignment-an-nnline-shop/commit/bfd782710394ff04fce3f51f464e5e342cbeb4ca

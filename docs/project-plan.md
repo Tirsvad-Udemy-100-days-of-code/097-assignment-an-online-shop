@@ -11,8 +11,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-22 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version | pending |
-| 2026-11-22 | Accepted | Jens Tirsvad Nielsen | S01 | Accepted after review RC-003; stand-in review, not independent | pending |
+| 2026-11-22 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version | [bfd7827] |
+| 2026-11-22 | Accepted | Jens Tirsvad Nielsen | S01 | Accepted after review RC-003; stand-in review, not independent | [bfd7827] |
 
 ---
 
@@ -104,3 +104,4 @@ the end date of 2026-12-11 is reported as at risk in the run summary.
 [MIL-005]: ./milestones/mil-005-stripe-checkout.md
 [MIL-006]: ./milestones/mil-006-order-kanban.md
 [MIL-007]: ./milestones/mil-007-wiki-release.md
+[bfd7827]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/097-assignment-an-nnline-shop/commit/bfd782710394ff04fce3f51f464e5e342cbeb4ca

@@ -11,8 +11,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-22 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version | pending |
-| 2026-11-22 | Accepted | Jens Tirsvad Nielsen | S01 | Accepted after review RC-008; stand-in review, not independent | pending |
+| 2026-11-22 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version | [bfd7827] |
+| 2026-11-22 | Accepted | Jens Tirsvad Nielsen | S01 | Accepted after review RC-008; stand-in review, not independent | [bfd7827] |
 
 ---
 
@@ -74,3 +74,4 @@ A basket that adds, changes and removes products, shows totals, and belongs to t
 
 
 [BC-001]: ../business-case.md
+[bfd7827]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/097-assignment-an-nnline-shop/commit/bfd782710394ff04fce3f51f464e5e342cbeb4ca
