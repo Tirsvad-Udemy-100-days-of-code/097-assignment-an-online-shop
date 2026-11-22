@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% from "_product_grid.html" import product_grid %}
+{% block content %}
+<section class="hero">
+<img class="hero-art" src="{{ url_for('static', filename=site.hero_image) }}" alt="{{ site.hero_image_alt }}">
+<div class="hero-text">
+<p class="hero-label">{{ site.hero_label }}</p>
+<h1>{{ site.hero_title }}</h1>
+<a class="button" href="#shop">{{ site.hero_button }}</a>
+</div>
+</section>
+<ul class="brand-strip">
+{% for _ in site.brand_tiles -%}
+<li class="brand-tile"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.8"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span>{{ site.brand_tile_label }}</span></li>
+{% endfor -%}
+</ul>
+<section class="catalog" id="shop">
+<h2 class="section-title"><span>{{ site.featured_title }}</span></h2>
+<p class="section-subtitle">{{ site.featured_subtitle }}</p>
+{{ product_grid(products, site) }}
+</section>
+{% endblock %}

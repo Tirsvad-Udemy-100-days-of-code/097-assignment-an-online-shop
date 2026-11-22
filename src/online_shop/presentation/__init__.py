@@ -1,1 +1,1 @@
-"""@brief The web layer: server, router, controllers and views."""
+"""@brief The web layer: the Flask application, blueprints and Jinja2 templates."""
