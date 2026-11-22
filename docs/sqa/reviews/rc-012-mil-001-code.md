@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-22 | Proposed | Jens Tirsvad Nielsen | S01 | Code review of the MIL-001 deliverable | pending |
+| 2026-11-22 | Proposed | Jens Tirsvad Nielsen | S01 | Code review of the MIL-001 deliverable | [1a690d1] |
 
 ---
 
@@ -59,3 +59,4 @@ Go: no Mandatory criterion fails. Reviewer is the stand-in for S01, not independ
 
 [MIL-001]: ../../milestones/mil-001-foundation.md
 [QC-PY-001]: ../../../framework/qc/code/qc-programming-python.md
+[1a690d1]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/097-assignment-an-online-shop/commit/1a690d1a2fc99d093b446b608598549c5e445219
