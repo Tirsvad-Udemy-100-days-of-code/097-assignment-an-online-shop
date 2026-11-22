@@ -35,3 +35,11 @@ class InvalidQuantityError(DomainError):
 
 class InvalidBasketError(DomainError):
     """@brief A basket or a basket line breaks one of its rules."""
+
+
+class InvalidOrderError(DomainError):
+    """@brief An order or an order line breaks one of its rules."""
+
+
+class DuplicateOrderError(DomainError):
+    """@brief An order for this payment session already exists."""

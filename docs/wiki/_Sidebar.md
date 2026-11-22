@@ -5,6 +5,7 @@
 - [Step 2: Product catalog and storage](Step-02-Product-Catalog)
 - [Step 3: Registration and login](Step-03-Registration-and-Login)
 - [Step 4: Shopping basket](Step-04-Shopping-Basket)
+- [Step 5: Stripe checkout](Step-05-Stripe-Checkout)
 
 **Languages**
 

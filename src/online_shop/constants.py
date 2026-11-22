@@ -199,3 +199,56 @@ TEXT_BASKET_QUANTITY = "Quantity"
 TEXT_BASKET_EMPTY = "Your basket is empty."
 TEXT_BASKET_CONTINUE = "Continue shopping"
 TEXT_BASKET_UNAVAILABLE = "Some products are no longer sold and are not shown."
+
+## @brief Orders: the currency of every payment and the placeholder Stripe fills
+#  with the id of the Checkout Session in the success address.
+CURRENCY_CODE = "eur"
+CHECKOUT_SESSION_PLACEHOLDER = "{CHECKOUT_SESSION_ID}"
+CHECKOUT_SESSION_QUERY = "session_id"
+
+## @brief Messages of the order and checkout rules.
+ERROR_ORDER_INVALID = "An order breaks one of its rules."
+ERROR_CHECKOUT_EMPTY = "Your basket is empty, so there is nothing to pay for."
+ERROR_CHECKOUT_UNAVAILABLE = "Checkout is not available right now."
+ERROR_CHECKOUT_GATEWAY = (
+    "The payment service could not be reached. Nothing was charged; try again later."
+)
+ERROR_CHECKOUT_NOT_PAID = "This payment was not completed, so no order was created."
+ERROR_CHECKOUT_FOREIGN = "This payment does not belong to your account."
+ERROR_CHECKOUT_SESSION_MISSING = "The payment reference is missing."
+
+## @brief Texts of the checkout button and pages.
+TEXT_CHECKOUT = "Checkout"
+TEXT_CHECKOUT_SUCCESS_TITLE = "Thank you for your order"
+TEXT_CHECKOUT_ORDER_NUMBER = "Order number"
+TEXT_CHECKOUT_STATUS = "Status"
+TEXT_CHECKOUT_TOTAL = "Total paid"
+TEXT_CHECKOUT_CANCEL_TITLE = "Payment cancelled"
+TEXT_CHECKOUT_CANCEL_BODY = "No payment was taken and no order was created."
+TEXT_CHECKOUT_CANCEL_KEPT = "Your basket is still waiting for you."
+TEXT_CHECKOUT_TO_BASKET = "Back to the basket"
+
+## @brief The git-ignored file with the Stripe test keys, the environment
+#  variable that names another file, and the keys inside it.
+STRIPE_ENV_FILE_NAME = "stripe.env"
+ENV_STRIPE_ENV_FILE = "SHOP_STRIPE_ENV_FILE"
+STRIPE_KEY_PUBLISHABLE = "PUBLISHABLE_KEY"
+STRIPE_KEY_SECRET = "SECRET_KEY"
+## The same two names are the environment variables used when there is no file.
+ENV_STRIPE_PUBLISHABLE_KEY = STRIPE_KEY_PUBLISHABLE
+ENV_STRIPE_SECRET_KEY = STRIPE_KEY_SECRET
+STRIPE_PUBLISHABLE_PREFIXES = ("pk_test_",)
+STRIPE_SECRET_PREFIXES = ("sk_test_", "rk_test_")
+STRIPE_KEY_PATTERN = r"[A-Za-z0-9_]+"
+
+## @brief The Stripe REST API: base address, paths, limits and the schemes a
+#  request or a returned redirect may use (plain http only for a local test server).
+STRIPE_API_BASE_URL = "https://api.stripe.com"
+STRIPE_SESSIONS_PATH = "/v1/checkout/sessions"
+STRIPE_TIMEOUT_SECONDS = 15
+STRIPE_MAX_RESPONSE_BYTES = 1024 * 1024
+STRIPE_ALLOWED_SCHEMES = frozenset({"https"})
+STRIPE_LOCAL_SCHEME = "http"
+STRIPE_LOCAL_HOSTS = frozenset({"127.0.0.1"})
+STRIPE_PAID_STATUS = "paid"
+STRIPE_MODE_PAYMENT = "payment"

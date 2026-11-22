@@ -242,4 +242,4 @@ def test_settings_read_the_environment_and_ignore_empty_values() -> None:
     settings = Settings.from_environment(
         {constants.ENV_SECRET_KEY: "k", constants.ENV_ADMIN_EMAIL: ""}
     )
-    assert settings == Settings("k", None, None)
+    assert settings == Settings("k", None, None, Path(constants.STRIPE_ENV_FILE_NAME))

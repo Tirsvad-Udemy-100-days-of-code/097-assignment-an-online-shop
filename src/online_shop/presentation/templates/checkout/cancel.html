@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="basket-panel checkout-panel">
+<h1>{{ texts.heading }}</h1>
+<p>{{ texts.body }}</p>
+{% if kept %}<p>{{ texts.kept }}</p>{% endif %}
+<p><a class="button" href="{{ url_for('basket.show') }}">{{ texts.to_basket }}</a></p>
+</section>
+{% endblock %}

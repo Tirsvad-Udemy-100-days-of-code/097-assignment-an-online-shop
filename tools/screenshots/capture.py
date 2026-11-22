@@ -17,6 +17,12 @@ from pathlib import Path
 from playwright.sync_api import Browser, BrowserContext, Page, sync_playwright
 from werkzeug.serving import make_server
 
+from online_shop import constants
+from online_shop.application.payment_gateway import (
+    CheckoutRequest,
+    CheckoutSession,
+    SessionResult,
+)
 from online_shop.presentation.app import create_app
 
 OUTPUT_DIR = Path("/work/docs/screenshots")
@@ -55,6 +61,16 @@ SHOT_EMAIL = "shopper@example.com"
 SHOT_PASSWORD = "correct horse battery"
 ## Product ids (seed order) put in the basket for step 4; the first goes in twice.
 SHOT_BASKET_PRODUCTS = (1, 2, 1, 4)
+## Id prefix of the sessions of the in-process gateway; the first one is paid in step 5.
+FAKE_SESSION_PREFIX = "cs_test_fake_"
+
+
+def _fill_basket(page: Page, base_url: str, product_ids: tuple[int, ...]) -> None:
+    """@brief Put each product in the basket through the add form of its page."""
+    for product_id in product_ids:
+        page.goto(f"{base_url}/products/{product_id}")
+        with page.expect_navigation():
+            page.click("form.add-form button[type=submit]")
 
 
 def step_04(page: Page, base_url: str) -> None:
@@ -64,12 +80,60 @@ def step_04(page: Page, base_url: str) -> None:
     page.fill("#password", SHOT_PASSWORD)
     with page.expect_navigation():
         page.click("section.auth-panel button[type=submit]")
-    for product_id in SHOT_BASKET_PRODUCTS:
-        page.goto(f"{base_url}/products/{product_id}")
-        with page.expect_navigation():
-            page.click("form.add-form button[type=submit]")
+    _fill_basket(page, base_url, SHOT_BASKET_PRODUCTS)
     page.goto(base_url + "/basket")
     page.wait_for_selector("ul.basket-lines li.basket-line")
+
+
+class InProcessPaymentGateway:
+    """@brief A payment gateway that never leaves the process: no Stripe, no keys.
+
+    Every session is paid at once and its address is the shop's own success page,
+    so "paying" is only the redirect that Stripe would do after the card step.
+    """
+
+    def __init__(self) -> None:
+        """@brief Start without sessions."""
+        self._sessions: dict[str, SessionResult] = {}
+
+    def create_checkout_session(self, request: CheckoutRequest) -> CheckoutSession:
+        """@brief Open a session that is already paid."""
+        session_id = f"{FAKE_SESSION_PREFIX}{len(self._sessions) + 1}"
+        total = sum(
+            item.unit_amount_cents * item.quantity for item in request.line_items
+        )
+        self._sessions[session_id] = SessionResult(
+            session_id, True, total, request.currency, request.client_reference_id
+        )
+        url = request.success_url.replace(
+            constants.CHECKOUT_SESSION_PLACEHOLDER, session_id
+        )
+        return CheckoutSession(session_id, url)
+
+    def retrieve_session(self, session_id: str) -> SessionResult:
+        """@brief Return the session made earlier."""
+        return self._sessions[session_id]
+
+
+def step_05(page: Page, base_url: str) -> None:
+    """@brief Pay one basket through the fake gateway, then fill the basket again.
+
+    The first order is the one the phone frame shows; the desktop view ends on
+    the basket page with its Checkout button.
+    """
+    page.goto(base_url + "/register")
+    page.fill("#email", SHOT_EMAIL)
+    page.fill("#password", SHOT_PASSWORD)
+    with page.expect_navigation():
+        page.click("section.auth-panel button[type=submit]")
+    _fill_basket(page, base_url, SHOT_BASKET_PRODUCTS)
+    page.goto(base_url + "/basket")
+    with page.expect_navigation():
+        page.click("form.checkout-form button[type=submit]")
+    page.wait_for_selector("dl.order-summary")
+    _fill_basket(page, base_url, SHOT_BASKET_PRODUCTS[:2])
+    page.goto(base_url + "/basket")
+    page.wait_for_selector("form.checkout-form button[type=submit]")
 
 
 def _png_base64(data: bytes) -> str:
@@ -120,6 +184,7 @@ SCENARIOS: dict[str, Callable[[Page, str], None]] = {
     "step-02": step_02,
     "step-03": step_03,
     "step-04": step_04,
+    "step-05": step_05,
 }
 
 ## Steps that compose a desktop shot with a phone frame, and what the frame shows.
@@ -127,6 +192,10 @@ PHONE_PAGES: dict[str, tuple[str, str]] = {
     "step-02": ("/", "ul.product-grid li.product-card"),
     "step-03": ("/register", "section.auth-panel form"),
     "step-04": ("/basket", "ul.basket-lines li.basket-line"),
+    "step-05": (
+        f"/checkout/success?{constants.CHECKOUT_SESSION_QUERY}={FAKE_SESSION_PREFIX}1",
+        "dl.order-summary",
+    ),
 }
 
 
@@ -137,7 +206,9 @@ def main(step: str) -> int:
     @return The exit code.
     """
     database = Path(tempfile.mkdtemp()) / "shots.sqlite3"
-    server = make_server("127.0.0.1", 0, create_app(database), threaded=True)
+    payments = InProcessPaymentGateway() if step == "step-05" else None
+    app = create_app(database, payments=payments)
+    server = make_server("127.0.0.1", 0, app, threaded=True)
     threading.Thread(target=server.serve_forever, daemon=True).start()
     host, port = server.server_address[:2]
     with sync_playwright() as playwright:

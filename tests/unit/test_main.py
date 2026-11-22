@@ -5,6 +5,7 @@ from pathlib import Path
 import pytest
 from flask import Flask
 
+from online_shop import constants
 from online_shop.main import main
 
 
@@ -17,5 +18,8 @@ def test_main_runs_the_app_without_debug(
         calls.append(options)
 
     monkeypatch.setattr(Flask, "run", fake_run)
+    monkeypatch.setenv(constants.ENV_STRIPE_ENV_FILE, str(tmp_path / "none.env"))
+    monkeypatch.delenv(constants.ENV_STRIPE_PUBLISHABLE_KEY, raising=False)
+    monkeypatch.delenv(constants.ENV_STRIPE_SECRET_KEY, raising=False)
     main("127.0.0.1", 5001, tmp_path / "shop.sqlite3")
     assert calls == [{"host": "127.0.0.1", "port": 5001, "debug": False}]
