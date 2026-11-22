@@ -11,3 +11,4 @@ En netbutik bygget med Flask, SQLite, Stripe Checkout og almindelig JavaScript, 
 | 3 | [Registrering og login](Step-03-Registration-and-Login-da) |
 | 4 | [Indkøbskurv](Step-04-Shopping-Basket-da) |
 | 5 | [Stripe checkout](Step-05-Stripe-Checkout-da) |
+| 6 | [Kanban-tavle for ordrer](Step-06-Order-Kanban-Board-da) |

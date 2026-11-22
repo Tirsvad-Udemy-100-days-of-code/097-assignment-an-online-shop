@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block head %}
+<meta name="csrf-token" content="{{ csrf_token() }}">
+<meta name="board-api" content="{{ api.board }}">
+<meta name="board-move-api" content="{{ api.move }}">
+<meta name="board-move-failed" content="{{ texts.move_failed }}">
+<meta name="board-load-failed" content="{{ texts.load_failed }}">
+<meta name="board-move-to" content="{{ texts.move_to }}">
+<meta name="board-order" content="{{ texts.order }}">
+<meta name="board-empty" content="{{ texts.empty }}">
+<script src="{{ url_for('static', filename='board.js') }}" defer></script>
+{% endblock %}
+{% block content %}
+<section class="board-page">
+<h1 class="board-title">{{ texts.heading }}</h1>
+<p id="board-message" class="board-message" role="alert" aria-live="assertive"></p>
+<div id="board" class="board" aria-label="{{ texts.heading }}"></div>
+</section>
+{% endblock %}

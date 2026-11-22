@@ -23,6 +23,8 @@ from online_shop.application.payment_gateway import (
     CheckoutSession,
     SessionResult,
 )
+from online_shop.domain.order import OrderStatus
+from online_shop.infrastructure.settings import Settings
 from online_shop.presentation.app import create_app
 
 OUTPUT_DIR = Path("/work/docs/screenshots")
@@ -136,6 +138,80 @@ def step_05(page: Page, base_url: str) -> None:
     page.wait_for_selector("form.checkout-form button[type=submit]")
 
 
+SHOT_ADMIN_EMAIL = "owner@example.com"
+SHOT_ADMIN_PASSWORD = "owner password for the shots"
+## Customers and what each buys in step 6: product ids per order, in buying order.
+SHOT_ORDERS = (
+    ("ann@example.com", (1, 2)),
+    ("bob@example.com", (3,)),
+    ("ann@example.com", (4, 1)),
+    ("cleo@example.com", (5, 6)),
+    ("bob@example.com", (2,)),
+)
+## Where the board owner moves the orders: order number and target column.
+SHOT_MOVES = (
+    (1, OrderStatus.CONFIRMED),
+    (2, OrderStatus.BEING_PACKED),
+    (3, OrderStatus.SHIPPED),
+    (4, OrderStatus.DELIVERED),
+    (5, OrderStatus.CONFIRMED),
+)
+BOARD_CARD = ".board-card"
+
+
+def _sign_in(page: Page, base_url: str, path: str, email: str, password: str) -> None:
+    """@brief Fill and send the register or the login form."""
+    page.goto(base_url + path)
+    page.fill("#email", email)
+    page.fill("#password", password)
+    with page.expect_navigation():
+        page.click("section.auth-panel button[type=submit]")
+
+
+def _buy(
+    browser: Browser,
+    base_url: str,
+    email: str,
+    products: tuple[int, ...],
+    first_time: bool,
+) -> None:
+    """@brief One customer pays for one basket; registers first, else signs in."""
+    context = browser.new_context(viewport=VIEWPORT)
+    page = context.new_page()
+    _sign_in(
+        page, base_url, "/register" if first_time else "/login", email, SHOT_PASSWORD
+    )
+    _fill_basket(page, base_url, products)
+    page.goto(base_url + "/basket")
+    with page.expect_navigation():
+        page.click("form.checkout-form button[type=submit]")
+    page.wait_for_selector("dl.order-summary")
+    context.close()
+
+
+def step_06(page: Page, base_url: str) -> None:
+    """@brief Five paid orders from three customers; the owner sorts them on the board.
+
+    The moves go through the select on each card, the keyboard path of the
+    board, and are checked again after a reload.
+    """
+    browser = page.context.browser
+    assert browser is not None
+    customers: set[str] = set()
+    for email, products in SHOT_ORDERS:
+        _buy(browser, base_url, email, products, email not in customers)
+        customers.add(email)
+    _sign_in(page, base_url, "/login", SHOT_ADMIN_EMAIL, SHOT_ADMIN_PASSWORD)
+    page.goto(base_url + "/admin/board")
+    page.wait_for_selector(BOARD_CARD)
+    for number, status in SHOT_MOVES:
+        card = f'{BOARD_CARD}[data-order-id="{number}"]'
+        page.select_option(f"{card} select", status.value)
+        page.wait_for_selector(f'section[data-status="{status.value}"] {card}')
+    page.reload()
+    page.wait_for_selector(BOARD_CARD)
+
+
 def _png_base64(data: bytes) -> str:
     return base64.b64encode(data).decode("ascii")
 
@@ -185,6 +261,7 @@ SCENARIOS: dict[str, Callable[[Page, str], None]] = {
     "step-03": step_03,
     "step-04": step_04,
     "step-05": step_05,
+    "step-06": step_06,
 }
 
 ## Steps that compose a desktop shot with a phone frame, and what the frame shows.
@@ -196,7 +273,11 @@ PHONE_PAGES: dict[str, tuple[str, str]] = {
         f"/checkout/success?{constants.CHECKOUT_SESSION_QUERY}={FAKE_SESSION_PREFIX}1",
         "dl.order-summary",
     ),
+    "step-06": ("/admin/board", BOARD_CARD),
 }
+
+## Steps that pay through the in-process gateway.
+PAYMENT_STEPS = frozenset({"step-05", "step-06"})
 
 
 def main(step: str) -> int:
@@ -206,8 +287,13 @@ def main(step: str) -> int:
     @return The exit code.
     """
     database = Path(tempfile.mkdtemp()) / "shots.sqlite3"
-    payments = InProcessPaymentGateway() if step == "step-05" else None
-    app = create_app(database, payments=payments)
+    payments = InProcessPaymentGateway() if step in PAYMENT_STEPS else None
+    settings = (
+        Settings(admin_email=SHOT_ADMIN_EMAIL, admin_password=SHOT_ADMIN_PASSWORD)
+        if step == "step-06"
+        else None
+    )
+    app = create_app(database, settings, payments=payments)
     server = make_server("127.0.0.1", 0, app, threaded=True)
     threading.Thread(target=server.serve_forever, daemon=True).start()
     host, port = server.server_address[:2]

@@ -252,3 +252,35 @@ STRIPE_LOCAL_SCHEME = "http"
 STRIPE_LOCAL_HOSTS = frozenset({"127.0.0.1"})
 STRIPE_PAID_STATUS = "paid"
 STRIPE_MODE_PAYMENT = "payment"
+
+## @brief The order board and the order history: item summary, time formats and
+#  the unknown-customer label of a card whose user was removed.
+ORDER_ITEM_FORMAT = "{quantity} x {name}"
+DATE_FORMAT = "%Y-%m-%d"
+DATETIME_FORMAT = "%Y-%m-%d %H:%M"
+UNKNOWN_CUSTOMER = "Unknown customer"
+
+## @brief Messages of the board rules and the board API.
+ERROR_ORDER_NOT_FOUND = "This order does not exist."
+ERROR_MOVE_STATUS = "The status is not one of the board columns."
+ERROR_MOVE_INDEX = "The index must be a whole number, zero or more."
+ERROR_MOVE_BODY = "Send JSON with order_id, status and index."
+ERROR_UNAUTHORIZED = "Sign in to use this."
+
+## @brief Texts of the board page, the order history and the header links.
+TEXT_BOARD = "Board"
+TEXT_BOARD_TITLE = "Order board"
+TEXT_BOARD_MOVE_TO = "Move to"
+TEXT_BOARD_ORDER = "Order"
+TEXT_BOARD_MOVE_FAILED = "The order could not be moved; it is back where it was."
+TEXT_BOARD_LOAD_FAILED = "The board could not be loaded."
+TEXT_BOARD_EMPTY_COLUMN = "No orders"
+TEXT_ORDERS = "Orders"
+TEXT_ORDERS_TITLE = "Your orders"
+TEXT_ORDERS_EMPTY = "You have no orders yet."
+TEXT_ORDERS_DATE = "Date"
+TEXT_ORDERS_VIEW = "View your orders"
+
+## @brief Board API: the paths the page script calls and the meta tag for the token.
+BOARD_API_PATH = "/api/board"
+BOARD_MOVE_PATH = "/api/board/move"

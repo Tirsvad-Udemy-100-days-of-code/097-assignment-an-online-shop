@@ -17,13 +17,16 @@ from online_shop.application.count_basket_items import CountBasketItems
 from online_shop.application.ensure_admin import EnsureAdmin
 from online_shop.application.get_product import GetProduct
 from online_shop.application.get_user import GetUser
+from online_shop.application.list_my_orders import ListMyOrders
 from online_shop.application.list_products import ListProducts
+from online_shop.application.move_order import MoveOrder
 from online_shop.application.payment_gateway import PaymentGateway
 from online_shop.application.register_user import RegisterUser
 from online_shop.application.remove_from_basket import RemoveFromBasket
 from online_shop.application.start_checkout import StartCheckout
 from online_shop.application.update_basket_line import UpdateBasketLine
 from online_shop.application.view_basket import ViewBasket
+from online_shop.application.view_board import ViewBoard
 from online_shop.domain.basket_repository import BasketRepository
 from online_shop.domain.order_repository import OrderRepository
 from online_shop.domain.password_hasher import PasswordHasher
@@ -51,6 +54,9 @@ from online_shop.presentation.features.auth.auth_controller import (
 from online_shop.presentation.features.basket.basket_controller import (
     create_basket_blueprint,
 )
+from online_shop.presentation.features.board.board_controller import (
+    create_board_blueprint,
+)
 from online_shop.presentation.features.catalog.catalog_controller import (
     create_catalog_blueprint,
 )
@@ -60,11 +66,19 @@ from online_shop.presentation.features.checkout.checkout_controller import (
 from online_shop.presentation.features.home.home_controller import (
     create_home_blueprint,
 )
+from online_shop.presentation.features.orders.orders_controller import (
+    create_orders_blueprint,
+)
+from online_shop.presentation.shared.admin_access import AdminAccess
 from online_shop.presentation.shared.basket_count import BasketCount
 from online_shop.presentation.shared.csrf import CsrfGuard
 from online_shop.presentation.shared.current_user import CurrentUser
 from online_shop.presentation.shared.errors import error_page
-from online_shop.presentation.shared.formatting import format_price
+from online_shop.presentation.shared.formatting import (
+    format_date,
+    format_price,
+    status_slug,
+)
 from online_shop.presentation.shared.session import SessionManager, configure_sessions
 
 _LOG = logging.getLogger(__name__)
@@ -104,6 +118,8 @@ _AUTH_TEXTS = {
     "signed_in_as": constants.TEXT_SIGNED_IN_AS,
     "admin_title": constants.TEXT_ADMIN_TITLE,
     "admin_body": constants.TEXT_ADMIN_BODY,
+    "orders": constants.TEXT_ORDERS,
+    "board": constants.TEXT_BOARD,
 }
 
 
@@ -170,6 +186,8 @@ def create_app_for(
     )
     app.context_processor(lambda: {"checkout_available": payments is not None})
     app.add_template_filter(format_price, "price")
+    app.add_template_filter(format_date, "date")
+    app.add_template_filter(status_slug, "status_slug")
     app.register_blueprint(create_home_blueprint(ListProducts(products)))
     app.register_blueprint(create_catalog_blueprint(GetProduct(products)))
     app.register_blueprint(
@@ -177,7 +195,14 @@ def create_app_for(
             RegisterUser(users, hasher), AuthenticateUser(users, hasher), sessions
         )
     )
-    app.register_blueprint(create_admin_blueprint(current_user))
+    admin_access = AdminAccess(current_user)
+    app.register_blueprint(create_admin_blueprint(admin_access))
+    app.register_blueprint(
+        create_board_blueprint(
+            admin_access, ViewBoard(orders, users), MoveOrder(orders)
+        )
+    )
+    app.register_blueprint(create_orders_blueprint(current_user, ListMyOrders(orders)))
     app.register_blueprint(
         create_basket_blueprint(
             current_user,

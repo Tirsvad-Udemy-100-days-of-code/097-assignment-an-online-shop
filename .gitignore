@@ -34,3 +34,6 @@ stripe.env
 
 # Session prompt log (kept local)
 docs/ai-prompts/
+
+# Test output of the browser tests
+results/

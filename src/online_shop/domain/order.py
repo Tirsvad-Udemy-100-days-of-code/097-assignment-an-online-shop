@@ -54,6 +54,7 @@ class Order:
     @param currency The lower case ISO currency code of the payment.
     @param created_at When the order was made; timezone aware.
     @param lines The lines as bought.
+    @param position Place inside the status column of the board, from 0.
     """
 
     id: int
@@ -64,11 +65,13 @@ class Order:
     currency: str
     created_at: datetime
     lines: tuple[OrderLine, ...] = ()
+    position: int = 0
 
     def __post_init__(self) -> None:
         """@brief Reject bad keys, a blank payment reference or a naive time."""
         if (
             self.id < 1
+            or self.position < 0
             or self.user_id < 1
             or not self.stripe_session_id.strip()
             or not self.currency.strip()
