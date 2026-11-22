@@ -1,0 +1,57 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "online-shop"
+version = "0.1.0"
+description = "Online shop with a basket, Stripe checkout and an order Kanban board, built with the Python standard library."
+readme = "README.md"
+requires-python = ">=3.14"
+license = "AGPL-3.0-only"
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.3",
+  "pytest-cov>=6.0",
+  "ruff>=0.8",
+  "mypy>=1.13",
+]
+
+[project.scripts]
+online-shop = "online_shop.main:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+online_shop = ["presentation/static/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests/unit", "tests/integration"]
+pythonpath = ["src", "tests"]
+addopts = "--cov=online_shop --cov-report=term-missing"
+
+[tool.coverage.run]
+omit = ["*/__main__.py"]
+
+[tool.coverage.report]
+fail_under = 90
+
+[tool.ruff]
+line-length = 88
+target-version = "py314"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "UP", "B", "SIM"]
+
+[tool.mypy]
+strict = true
+mypy_path = "src:tests"
+
+[[tool.mypy.overrides]]
+# playwright is installed only in the Docker image that runs tests/e2e.
+module = ["playwright.*"]
+ignore_missing_imports = true
