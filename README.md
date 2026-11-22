@@ -66,7 +66,17 @@ With the environment active:
 python -m online_shop
 ```
 
-Then open <http://127.0.0.1:8000/> in a browser. Stop the server with `Ctrl+C`. The host and port are in `src/online_shop/constants.py`.
+Then open <http://127.0.0.1:8000/> in a browser.
+
+Accounts use three optional environment variables. They are read at start and never printed:
+
+| Variable | Meaning |
+| --- | --- |
+| `SHOP_SECRET_KEY` | Signs the session cookie. If it is missing, a random key is made at start and sessions end when the server stops. |
+| `SHOP_ADMIN_EMAIL` | Email of the admin account, created at start when both admin variables are set. |
+| `SHOP_ADMIN_PASSWORD` | Password of the admin account. There is no default; choose your own. |
+
+For example, in PowerShell: `$env:SHOP_ADMIN_EMAIL = "admin@example.com"; $env:SHOP_ADMIN_PASSWORD = "<your password>"`, then `python -m online_shop`. The admin page is at <http://127.0.0.1:8000/admin>. Stop the server with `Ctrl+C`. The host and port are in `src/online_shop/constants.py`.
 
 ## 📸 Screenshots
 
@@ -74,6 +84,7 @@ Then open <http://127.0.0.1:8000/> in a browser. Stop the server with `Ctrl+C`. 
 | --- | --- |
 | 1. Project foundation | The first page of the shop ![Step 1](docs/screenshots/step-01.png) |
 | 2. Product catalog and storage | The dark catalog on desktop and phone, rendered by Flask ![Step 2](docs/screenshots/step-02.png) |
+| 3. Registration and login | The login page on desktop and the register page on a phone ![Step 3](docs/screenshots/step-03.png) |
 
 Screenshots are made in a Docker container, never on the desktop:
 

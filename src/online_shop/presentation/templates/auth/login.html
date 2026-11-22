@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% from "_fields.html" import field %}
+{% block content %}
+<section class="auth-panel">
+<h1>{{ site.auth.login_title }}</h1>
+{% if form_error %}<p class="form-error" role="alert">{{ form_error }}</p>{% endif %}
+<form method="post" action="{{ url_for('auth.login_submit') }}" novalidate>
+{% include "_csrf.html" %}
+{% if next_url %}<input type="hidden" name="next" value="{{ next_url }}">{% endif %}
+{{ field("email", site.auth.email, "email", email, none, "email") }}
+{{ field("password", site.auth.password, "password", "", none, "current-password") }}
+<button class="button" type="submit">{{ site.auth.login }}</button>
+</form>
+<p class="auth-switch">{{ site.auth.no_account }} <a href="{{ url_for('auth.register') }}">{{ site.auth.register }}</a></p>
+</section>
+{% endblock %}

@@ -1,8 +1,9 @@
 # Headless browser used for the end-to-end tests and the screenshots.
 # Build:  docker build -t online-shop-shots tools/screenshots
-FROM python@sha256:a1165e272e578941b84abc79e4ab38a0305cd12803a5c4247979ac7655f4d641
+# Python 3.14, the version the project requires (python:3.14-slim, pinned by digest).
+FROM python@sha256:9aaa474097d094040649f2162a627c0049b408f52138d980916788d80f04802f
 # Flask is pinned to the version of pyproject.toml.
-RUN pip install --no-cache-dir Flask==3.1.3 playwright==1.49.1 pytest==8.3.4 \
+RUN pip install --no-cache-dir Flask==3.1.3 playwright==1.56.0 pytest==8.3.4 \
     && playwright install --with-deps chromium
 WORKDIR /work
 ENV PYTHONPATH=/work/src

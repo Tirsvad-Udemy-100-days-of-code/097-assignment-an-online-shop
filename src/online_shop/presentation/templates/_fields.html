@@ -1,0 +1,8 @@
+{% macro field(name, label, type, value, error, autocomplete, hint="") -%}
+<div class="form-field">
+<label for="{{ name }}">{{ label }}</label>
+<input id="{{ name }}" name="{{ name }}" type="{{ type }}" value="{{ value }}" autocomplete="{{ autocomplete }}" required{% if error %} aria-invalid="true" aria-describedby="{{ name }}-error"{% endif %}>
+{%- if hint and not error %}<p class="form-hint">{{ hint }}</p>{% endif %}
+{%- if error %}<p class="field-error" id="{{ name }}-error">{{ error }}</p>{% endif %}
+</div>
+{%- endmacro %}

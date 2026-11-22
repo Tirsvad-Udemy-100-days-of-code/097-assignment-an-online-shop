@@ -96,3 +96,77 @@ SEED_PRODUCTS = (
 ERROR_PRODUCT_NOT_FOUND = "This product does not exist."
 ERROR_NOT_FOUND = "Not found."
 ERROR_METHOD_NOT_ALLOWED = "Method not allowed."
+
+## @brief Rules for email addresses and passwords.
+EMAIL_MAX_LENGTH = 254
+EMAIL_PATTERN = r"[^@\s]+@[^@\s]+\.[^@\s]+"
+PASSWORD_MIN_LENGTH = 8
+PASSWORD_MAX_LENGTH = 128
+
+## @brief Messages of the account rules and use cases.
+ERROR_EMAIL_INVALID = "Enter a valid email address."
+ERROR_PASSWORD_TOO_SHORT = (
+    f"The password needs at least {PASSWORD_MIN_LENGTH} characters."
+)
+ERROR_PASSWORD_TOO_LONG = (
+    f"The password can have at most {PASSWORD_MAX_LENGTH} characters."
+)
+ERROR_EMAIL_TAKEN = "An account with this email already exists."
+ERROR_BAD_CREDENTIALS = "The email or the password is wrong."
+ERROR_USER_INVALID = "A user needs a positive id."
+ERROR_FORBIDDEN = "You do not have access to this page."
+ERROR_CSRF = "The form is expired or invalid. Go back, reload the page and try again."
+
+## @brief The scrypt password hash: cost parameters, sizes and the stored format.
+#  The stored text is SCHEME$n$r$p$salt$key, so the parameters can change later
+#  and old hashes still verify.
+SCRYPT_SCHEME = "scrypt"
+SCRYPT_N = 2**14
+SCRYPT_R = 8
+SCRYPT_P = 1
+SCRYPT_SALT_BYTES = 16
+SCRYPT_KEY_BYTES = 32
+SCRYPT_MAX_MEMORY_BYTES = 128 * 1024 * 1024
+HASH_SEPARATOR = "$"
+HASH_PART_COUNT = 6
+
+## @brief Number of random bytes of the throw-away password that keeps the login
+#  timing the same for an unknown email.
+DUMMY_PASSWORD_BYTES = 16
+
+## @brief Names of the environment variables the shop reads.
+ENV_SECRET_KEY = "SHOP_SECRET_KEY"
+ENV_ADMIN_EMAIL = "SHOP_ADMIN_EMAIL"
+ENV_ADMIN_PASSWORD = "SHOP_ADMIN_PASSWORD"
+SECRET_KEY_BYTES = 32
+
+## @brief The signed session cookie and the CSRF token.
+SESSION_LIFETIME_SECONDS = 7 * 24 * 60 * 60
+SESSION_COOKIE_SAMESITE = "Lax"
+SESSION_USER_KEY = "user_id"
+SESSION_CSRF_KEY = "csrf_token"
+CSRF_TOKEN_BYTES = 32
+CSRF_FORM_FIELD = "csrf_token"
+CSRF_HEADER = "X-CSRF-Token"
+CSRF_PROTECTED_METHODS = frozenset({"POST", "PUT", "PATCH", "DELETE"})
+
+## @brief Form field names of the account pages.
+FIELD_EMAIL = "email"
+FIELD_PASSWORD = "password"
+FIELD_NEXT = "next"
+
+## @brief Texts of the account pages and the header, shown to templates as `auth`.
+TEXT_LOGIN = "Login"
+TEXT_REGISTER = "Register"
+TEXT_LOGOUT = "Logout"
+TEXT_ADMIN = "Admin"
+TEXT_EMAIL = "Email"
+TEXT_PASSWORD = "Password"
+TEXT_LOGIN_TITLE = "Sign in"
+TEXT_REGISTER_TITLE = "Create an account"
+TEXT_PASSWORD_HINT = f"At least {PASSWORD_MIN_LENGTH} characters."
+TEXT_NO_ACCOUNT = "No account yet?"
+TEXT_HAVE_ACCOUNT = "Already registered?"
+TEXT_SIGNED_IN_AS = "Signed in as"
+TEXT_ADMIN_TITLE = "Administration"
+TEXT_ADMIN_BODY = "Only administrators see this page."

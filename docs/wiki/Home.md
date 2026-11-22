@@ -8,3 +8,4 @@ An online shop built with Flask, SQLite, Stripe Checkout and plain JavaScript, w
 | --- | --- |
 | 1 | [Project foundation](Step-01-Project-Foundation) |
 | 2 | [Product catalog and storage](Step-02-Product-Catalog) |
+| 3 | [Registration and login](Step-03-Registration-and-Login) |

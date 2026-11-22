@@ -5,6 +5,9 @@ from contextlib import closing
 from pathlib import Path
 
 from online_shop import constants
+from online_shop.domain.user import UserRole
+
+_ROLE_VALUES = ", ".join(f"'{role.value}'" for role in UserRole)
 
 ## Each script upgrades the schema by one version and records it; a script that
 ## is already applied is skipped, so the data survives a restart.
@@ -18,6 +21,15 @@ _MIGRATIONS = (
         image TEXT NOT NULL
     );
     PRAGMA user_version = 1;
+    """,
+    f"""
+    CREATE TABLE users (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        email TEXT NOT NULL UNIQUE COLLATE NOCASE,
+        password_hash TEXT NOT NULL,
+        role TEXT NOT NULL CHECK (role IN ({_ROLE_VALUES}))
+    );
+    PRAGMA user_version = 2;
     """,
 )
 
