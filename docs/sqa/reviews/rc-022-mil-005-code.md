@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-23 | Proposed | Jens Tirsvad Nielsen | S01 | Code review of the MIL-005 deliverable (Stripe checkout and orders) | pending |
+| 2026-11-23 | Proposed | Jens Tirsvad Nielsen | S01 | Code review of the MIL-005 deliverable (Stripe checkout and orders) | [abe424a] |
 
 ---
 
@@ -60,3 +60,4 @@ Go: no Mandatory criterion fails. Reviewer is the stand-in for S01, not independ
 [MIL-005]: ../../milestones/mil-005-stripe-checkout.md
 [QC-PY-001]: ../../../framework/qc/code/qc-programming-python.md
 [ADR-0002]: ../../adr/adr-0002-flask-web-framework.md
+[abe424a]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/097-assignment-an-online-shop/commit/abe424abf48ba2b5ad74aa1151eafa325b89849a
