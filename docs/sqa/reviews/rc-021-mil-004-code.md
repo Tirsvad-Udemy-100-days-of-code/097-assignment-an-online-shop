@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-23 | Proposed | Jens Tirsvad Nielsen | S01 | Code review of the MIL-004 deliverable (basket) | pending |
+| 2026-11-23 | Proposed | Jens Tirsvad Nielsen | S01 | Code review of the MIL-004 deliverable (basket) | [f7a6c81] |
 
 ---
 
@@ -60,3 +60,4 @@ Go: no Mandatory criterion fails. Reviewer is the stand-in for S01, not independ
 [MIL-004]: ../../milestones/mil-004-basket.md
 [QC-PY-001]: ../../../framework/qc/code/qc-programming-python.md
 [ADR-0002]: ../../adr/adr-0002-flask-web-framework.md
+[f7a6c81]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/097-assignment-an-online-shop/commit/f7a6c81242826c0ee52e5ec39148391e5d1efe0b
