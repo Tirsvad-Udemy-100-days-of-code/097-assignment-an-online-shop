@@ -4,15 +4,15 @@
 | Key | Value |
 | --- | --- |
 | ID | BC-001 |
-| CrossReference | [SA-001] |
+| CrossReference | [SA-001], [ADR-0002] |
 | Language | en |
 | Domain | it |
 
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-22 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version | [bfd7827] |
-| 2026-11-22 | Accepted | Jens Tirsvad Nielsen | S01 | Accepted after review RC-002; stand-in review, not independent | [bfd7827] |
+| 2026-11-22 | Deprecated | Jens Tirsvad Nielsen | S01 | Accepted after review RC-002; stand-in review, not independent | [bfd7827] |
+| 2026-11-22 | Accepted | Jens Tirsvad Nielsen | S01 | Flask as the only runtime dependency (objective 5, KPI 5, scope, risk, constraint) per ADR-0002; accepted after review RC-014, stand-in review, not independent | pending |
 
 ---
 
@@ -21,7 +21,7 @@
 Day 97 of the 100 Days of Code bootcamp asks the participant to build an
 eCommerce website with a working basket and checkout, real payment processing
 and login and registration. The Product Owner builds it as a small, readable
-Python shop that runs on the standard library, takes payment through Stripe
+Python shop built with Flask, takes payment through Stripe
 Checkout in a Stripe sandbox, and gives the shop owner a Kanban board to track
 orders from "Needs confirmation" to "Delivered", in the style of the Day 89
 todo list. It is documented in three languages and every build step is shown
@@ -47,9 +47,9 @@ course participants.
    from payment to delivery is incomplete; a Kanban board is a familiar way
    to show that flow.
 3. The belief that would kill the idea if false: payment through Stripe
-   Checkout can be integrated with the Python standard library alone, in
-   test mode, without a Stripe package. If it cannot, the "no runtime
-   dependencies" promise to S03 breaks.
+   Checkout can be integrated with the Python standard library (`urllib`)
+   alone, in test mode, without a Stripe package. If it cannot, the
+   "Flask is the only direct runtime dependency" promise to S03 breaks.
 
 ## Business Opportunity
 
@@ -68,7 +68,7 @@ S03 a repository with ideas that runs with a few commands.
 4. Give the admin a Kanban board of orders with the columns Needs confirmation,
    Confirmed, Being packed, Shipped and Delivered, moved by drag and drop, and
    give each customer a view of their own order status.
-5. Ship it with no runtime dependencies, tests with pytest, doxygen comments, a
+5. Ship it with Flask as the only direct runtime dependency, tests with pytest, doxygen comments, a
    Doxyfile, a README that documents a local `.venv`, running the shop and
    running the tests.
 6. Show every build step with a screenshot in the README and in the wiki, and
@@ -128,7 +128,7 @@ also demonstrates process, not only code.
 | 2 | Real payment in test mode | One test payment with the Stripe test card completes in the sandbox | Recorded result of the sandbox run |
 | 3 | Order board | A paid order moves across all five columns and keeps its place after reload | Browser test in a container exits 0 |
 | 4 | Tests | At least 90 percent line coverage of `src/` on unit and integration tests | pytest coverage report |
-| 5 | No runtime dependencies | 0 packages in `[project].dependencies` | Inspect `pyproject.toml` |
+| 5 | One runtime dependency | `[project].dependencies` lists only Flask, pinned | Inspect `pyproject.toml` |
 | 6 | Setup works from the README | A fresh clone reaches a running shop in 6 commands or fewer | Follow the README in a clean container |
 | 7 | Screenshots | One screenshot per build step (6) in the README and in every wiki language | Count image links |
 | 8 | Wiki languages | 3 languages with the same page set | Page list of `docs/wiki/` |
@@ -141,7 +141,7 @@ also demonstrates process, not only code.
 | --- | --- | --- |
 | Stripe integration without its package is harder than expected | Schedule slip on the payment milestone | Call only two REST endpoints (create and retrieve a Checkout Session); keep a gateway port and a fake |
 | Stripe keys leak into the repository or logs | Security defect | Keys live only in the ignored `.env`, are never printed, never committed; opengrep scan before each push |
-| Account and session code written by hand has flaws | Security defect | Use `hashlib.scrypt`, `hmac` and `secrets`; CSRF tokens; tests for tampering |
+| Account and session code has flaws | Security defect | Use Flask's signed session, `hashlib.scrypt` and `secrets`; CSRF tokens; tests for tampering |
 | Screenshots need a browser and the host desktop must not be used | Screenshots not produced | Headless browser in a Docker container; stop and report if Docker is unavailable |
 | The test keys in `stripe.env` are rejected by Stripe | Payment milestone blocked | Stop and report; the gateway port and fake let other work continue |
 | Wiki translations drift from English | Inconsistent documentation | English is written first; the page set is checked equal across languages |
@@ -160,7 +160,7 @@ also demonstrates process, not only code.
 
 - Python 3.14 or newer; a local `.venv`; pytest; constants in `constants.py`.
 - Folders `src/`, `tests/` and `docs/`.
-- No runtime dependencies unless needed; none are expected.
+- Flask is the only direct runtime dependency ([ADR-0002]); no ORM and no Stripe package.
 - No artifact of the repository names the tools used to write it.
 - Duration: finish by 2026-12-11, about 200 minutes of course effort plus
   documentation work.
@@ -196,3 +196,4 @@ Proceed.
 
 [SA-001]: ./stakeholder-analysis.md
 [bfd7827]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/097-assignment-an-nnline-shop/commit/bfd782710394ff04fce3f51f464e5e342cbeb4ca
+[ADR-0002]: ./adr/adr-0002-flask-web-framework.md

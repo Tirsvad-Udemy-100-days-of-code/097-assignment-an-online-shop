@@ -11,8 +11,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-22 | Deprecated | Jens Tirsvad Nielsen | S01 | Initial version | [bfd7827] |
-| 2026-11-22 | Accepted | Jens Tirsvad Nielsen | S01 | Accepted after review RC-006; stand-in review, not independent | [bfd7827] |
+| 2026-11-22 | Deprecated | Jens Tirsvad Nielsen | S01 | Accepted after review RC-006; stand-in review, not independent | [bfd7827] |
+| 2026-11-22 | Accepted | Jens Tirsvad Nielsen | S01 | Task 4 uses Flask and Jinja2 per ADR-0002; accepted after review RC-017, stand-in review, not independent | pending |
 
 ---
 
@@ -65,7 +65,7 @@ Product entity, SQLite repository, seeded catalog, product list and product deta
 | 1 | Model products and money | Add the Product entity and a Money value in whole minor units (cents) with validation, and a repository port, with unit tests. | No |  |
 | 2 | Implement the SQLite product repository | Add a sqlite3 adapter behind the port, with migration on start and a seed of sample products, with integration tests. | No |  |
 | 3 | Add the list and detail use cases | Add use cases that list products and fetch one product, mapped to DTOs, with unit tests. | No |  |
-| 4 | Render the catalog pages | Add the product grid on the home page and the product detail page with a small router, templates written with string.Template and a stylesheet. | No |  |
+| 4 | Render the catalog pages | Add the product grid on the home page and the product detail page with Flask routes, Jinja2 templates and a stylesheet. | No |  |
 | 5 | Capture step screenshot for step 2 | Capture docs/screenshots/step-02.png of the catalog and add it to the README. | No |  |
 | 6 | Write wiki pages for step 2 | Write the three-language wiki pages about layering, SQLite and money in cents. | No |  |
 

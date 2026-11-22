@@ -10,6 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-11-22 | Proposed | Jens Tirsvad Nielsen | S01 | Initial version | [bfd7827] |
+| 2026-11-22 | Proposed | Jens Tirsvad Nielsen | S01 | Added ADR-0002 and the reviews RC-013 to RC-018 for the Flask change | pending |
 
 ---
 
@@ -23,13 +24,14 @@ updated whenever an artifact instance is created or reviewed.
 
 | Artifact Instance | Type | Language | Domain | Upstream (Backward Link) | Downstream (Forward Link) | Last Reviewed (RC-ID) |
 | --- | --- | --- | --- | --- | --- | --- |
-| BC-001 | Business Case | en | it | - | SA-001, PP-001 | RC-002 |
-| SA-001 | Stakeholder Analysis | en | it | BC-001 | PP-001 | RC-001 |
-| PP-001 | Project Plan | en | it | BC-001, SA-001 | MIL-001 to MIL-007 | RC-003 |
-| ADR-0001 | ADR | - | - | BC-001, SA-001 | - | RC-004 |
+| BC-001 | Business Case | en | it | - | SA-001, PP-001 | RC-014 |
+| SA-001 | Stakeholder Analysis | en | it | BC-001 | PP-001 | RC-015 |
+| PP-001 | Project Plan | en | it | BC-001, SA-001 | MIL-001 to MIL-007 | RC-016 |
+| ADR-0001 | ADR | - | - | BC-001, SA-001 | ADR-0002 | RC-004 |
+| ADR-0002 | ADR | - | - | BC-001, SA-001, ADR-0001 | - | RC-013 |
 | MIL-001 | Milestone | en | it | BC-001 | - | RC-005 |
-| MIL-002 | Milestone | en | it | BC-001 | - | RC-006 |
-| MIL-003 | Milestone | en | it | BC-001 | - | RC-007 |
+| MIL-002 | Milestone | en | it | BC-001 | - | RC-017 |
+| MIL-003 | Milestone | en | it | BC-001 | - | RC-018 |
 | MIL-004 | Milestone | en | it | BC-001 | - | RC-008 |
 | MIL-005 | Milestone | en | it | BC-001 | - | RC-009 |
 | MIL-006 | Milestone | en | it | BC-001 | - | RC-010 |
