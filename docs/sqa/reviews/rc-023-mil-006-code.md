@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-23 | Proposed | Jens Tirsvad Nielsen | S01 | Code review of the MIL-006 deliverable (order Kanban board and order history) | pending |
+| 2026-11-23 | Proposed | Jens Tirsvad Nielsen | S01 | Code review of the MIL-006 deliverable (order Kanban board and order history) | [94264f4] |
 
 ---
 
@@ -60,3 +60,4 @@ Go: no Mandatory criterion fails. Reviewer is the stand-in for S01, not independ
 [MIL-006]: ../../milestones/mil-006-order-kanban.md
 [QC-PY-001]: ../../../framework/qc/code/qc-programming-python.md
 [ADR-0002]: ../../adr/adr-0002-flask-web-framework.md
+[94264f4]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/097-assignment-an-online-shop/commit/94264f4b666049e069a71f5b4511583e22eea3f6
